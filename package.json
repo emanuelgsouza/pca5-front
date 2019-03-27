@@ -8,6 +8,7 @@
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
+    "dev": "NODE_ENV=development quasar dev",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
