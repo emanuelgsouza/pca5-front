@@ -1,18 +1,24 @@
 <template>
-  <QPage class="q-pa-md row items-start q-gutter-md">
+  <QPage padding class="q-pa-md row items-start q-gutter-md">
     <ProductCard
       v-for="(product, key) in products"
       :key="key"
       :product="product" />
+
+    <QPageSticky position="bottom-right" :offset="[18, 18]">
+      <QBtn fab color="primary" icon="add" />
+    </QPageSticky>
   </QPage>
 </template>
 
 <script>
+import { QPageSticky } from 'quasar'
 import ProductCard from 'src/domains/Product/components/Card'
 
 export default {
   name: 'DashboardPageIndex',
   components: {
+    QPageSticky,
     ProductCard
   },
   data: () => ({
