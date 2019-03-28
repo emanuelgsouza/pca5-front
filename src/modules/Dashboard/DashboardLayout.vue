@@ -6,7 +6,7 @@
         <q-btn dense flat round icon="menu" @click="left = !left" />
 
         <q-toolbar-title>
-          Boadica++
+          Boadica Plus
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -24,6 +24,7 @@
 
 <script>
 export default {
+  name: 'DashboardLayout',
   data () {
     return {
       left: true

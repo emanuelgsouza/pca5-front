@@ -1,13 +1,10 @@
+import DashboardRoutes from 'src/modules/Dashboard/Routes'
 
 const routes = [
+  ...DashboardRoutes,
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '', component: () => import('pages/Index.vue')
-      }
-    ]
+    redirect: '/dashboard'
   }
 ]
 

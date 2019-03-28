@@ -14,16 +14,16 @@ module.exports = function (ctx) {
 
     extras: [
       'roboto-font',
-      'material-icons' // optional, you are not bound to it
+      'material-icons', // optional, you are not bound to it
       // 'ionicons-v4',
       // 'mdi-v3',
-      // 'fontawesome-v5',
+      'fontawesome-v5'
       // 'eva-icons'
     ],
 
     framework: {
       // all: true, // --- includes everything; for dev only!
-
+      iconSet: 'fontawesome-v5',
       components: [
         'QLayout',
         'QHeader',
