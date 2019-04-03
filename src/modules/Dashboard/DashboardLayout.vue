@@ -3,32 +3,36 @@
 
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="left = !left" />
-
+        <!-- <q-btn dense flat round icon="menu" @click="left = !left" /> -->
         <q-toolbar-title>
           Boadica Plus
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="left" side="left" bordered>
-      <!-- drawer content -->
-    </q-drawer>
+    <!-- <q-drawer v-model="left" side="left" bordered>
+      drawer content
+    </q-drawer> -->
 
     <q-page-container>
       <router-view />
+
+      <FloatingButton />
     </q-page-container>
 
   </q-layout>
 </template>
 
 <script>
+import FloatingButton from './components/FloatingButton'
+
 export default {
   name: 'DashboardLayout',
   data () {
     return {
-      left: true
+      left: false
     }
-  }
+  },
+  components: { FloatingButton }
 }
 </script>
