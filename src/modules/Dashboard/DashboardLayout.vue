@@ -5,7 +5,9 @@
       <q-toolbar>
         <!-- <q-btn dense flat round icon="menu" @click="left = !left" /> -->
         <q-toolbar-title>
-          Boadica Plus
+          <router-link
+            to="/"
+            class="text-white index_link"> Boadica Plus </router-link>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -36,3 +38,9 @@ export default {
   components: { FloatingButton }
 }
 </script>
+
+<style>
+.index_link {
+  text-decoration: none;
+}
+</style>

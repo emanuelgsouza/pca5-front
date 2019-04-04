@@ -1,5 +1,5 @@
 <template>
-  <QPageSticky position="bottom-right" :offset="[18, 18]">
+  <QPageSticky position="bottom-right" :offset="[18, 18]" v-if="!isRegisterRoute">
     <QBtn
       fab
       icon="add"
@@ -14,6 +14,11 @@ import { QPageSticky, QBtn } from 'quasar'
 export default {
   name: 'FloatingButton',
   components: { QPageSticky, QBtn },
+  computed: {
+    isRegisterRoute () {
+      return this.$route.name.indexOf('register') !== -1
+    }
+  },
   methods: {
     onClick () {
       this.$router.push({

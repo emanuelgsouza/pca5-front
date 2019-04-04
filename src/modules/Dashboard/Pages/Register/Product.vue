@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p> Cadastre aqui o produto </p>
+    <p class="text-h6"> Cadastre aqui o produto </p>
 
-    <CreateProductForm />
+    <CreateProductForm @data="onData" />
   </div>
 </template>
 
@@ -12,8 +12,14 @@ import CreateProductForm from '../../../../domains/Product/components/Form/Creat
 export default {
   components: { CreateProductForm },
   data: () => ({
-
-  })
+    model: {}
+  }),
+  methods: {
+    onData (model) {
+      // Função responsável por fazzer a requisição para a API
+      this.models = { ...model }
+    }
+  }
 }
 </script>
 
