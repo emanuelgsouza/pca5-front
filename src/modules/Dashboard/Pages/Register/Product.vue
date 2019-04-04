@@ -2,7 +2,7 @@
   <div>
     <p class="text-h6"> Cadastre aqui o produto </p>
 
-    <CreateProductForm @data="onData" />
+    <CreateProductForm ref="form" @data="onData" />
   </div>
 </template>
 
@@ -18,6 +18,8 @@ export default {
     onData (model) {
       // Função responsável por fazzer a requisição para a API
       this.models = { ...model }
+
+      this.$refs.form.clear()
     }
   }
 }

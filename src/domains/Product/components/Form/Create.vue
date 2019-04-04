@@ -88,6 +88,9 @@ export default {
       this.model = {
         ...this.$options.data().model
       }
+    },
+    clear () {
+      this.onReset()
     }
   }
 }
