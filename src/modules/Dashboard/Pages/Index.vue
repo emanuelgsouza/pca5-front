@@ -1,5 +1,6 @@
 <template>
   <QPage padding class="q-pa-md row items-start q-gutter-md">
+    <p> Veja aqui os produtos / serviços que selecionamos para você </p>
     <ProductCard
       v-for="(product, key) in products"
       :key="key"
