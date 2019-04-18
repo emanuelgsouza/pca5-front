@@ -1,4 +1,5 @@
 // Configuration for your app
+const path = require('path')
 
 module.exports = function (ctx) {
   return {
@@ -69,6 +70,12 @@ module.exports = function (ctx) {
           loader: 'eslint-loader',
           exclude: /node_modules/
         })
+
+        cfg.resolve.alias = {
+          ...cfg.resolve.alias,
+          domains: path.resolve(__dirname, './src/domains'),
+          services: path.resolve(__dirname, './src/services')
+        }
       }
     },
 
