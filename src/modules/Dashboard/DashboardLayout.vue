@@ -9,6 +9,14 @@
             to="/"
             class="text-white index_link"> Boadica Plus </router-link>
         </q-toolbar-title>
+
+        <QBtn
+          @click="goToLogin"
+          round
+          :to="{ name: 'dashboard.register.login' }"
+          icon="navigation"
+        />
+
       </q-toolbar>
     </q-header>
 
@@ -27,6 +35,7 @@
 
 <script>
 import FloatingButton from './components/FloatingButton'
+import { QBtn } from 'quasar'
 
 export default {
   name: 'DashboardLayout',
@@ -35,7 +44,7 @@ export default {
       left: false
     }
   },
-  components: { FloatingButton }
+  components: { FloatingButton, QBtn }
 }
 </script>
 
