@@ -31,6 +31,21 @@ export default {
       const model = { ...this.model }
       set(model, path, value)
       this.$emit('update:model', { ...model })
+    },
+    validate () {
+      if (this.$refs.form) {
+        return this.$refs.form.validate()
+          .then(success => {
+            console.log({ success })
+            this.$emit('validate', !success)
+
+            if (success) {
+              return Promise.resolve(success)
+            }
+
+            return Promise.reject(new Error('Validação de formulário...'))
+          })
+      }
     }
   }
 }

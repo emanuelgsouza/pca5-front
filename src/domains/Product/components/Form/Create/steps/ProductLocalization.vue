@@ -4,13 +4,15 @@
 
     <!-- Ao entrar nesta etapa, capturar os dados de localização do usuário -->
 
-    <QInput
-      dense
-      v-if="isOnlineProduct"
-      label="URL do produto"
-      :value="model.url"
-      @input="value => updateModel('url', value)"
-    />
+    <QForm ref="form">
+      <QInput
+        dense
+        v-if="isOnlineProduct"
+        label="URL do produto"
+        :value="model.url"
+        @input="value => updateModel('url', value)"
+      />
+    </QForm>
   </div>
 </template>
 

@@ -15,16 +15,23 @@
         icon="settings"
         :done="step > 1"
       >
-        <ProductType :model.sync="model" />
+        <ProductType
+          :model.sync="model"
+        />
       </QStep>
 
       <QStep
         :name="2"
         title="Nos dê mais informações sobre ele"
         icon="info"
+        :error="hasErrors.generalInfo"
         :done="step > 2"
       >
-        <GeneralInformations :model.sync="model" />
+        <GeneralInformations
+          ref="generalInfoForm"
+          :model.sync="model"
+          @validate="value => onValidate('generalInfo', value)"
+        />
       </QStep>
 
       <QStep
@@ -33,24 +40,32 @@
         icon="add_a_photo"
         :done="step > 3"
       >
-        <ProductImage :model.sync="model" @nextStep="$refs.stepper.next()" />
+        <ProductImage
+          :model.sync="model"
+          @nextStep="$refs.stepper.next()"
+        />
       </QStep>
 
       <QStep
         :name="4"
         title="Como podemos encontrar esse produto?"
         icon="navigation"
+        :error="hasErrors.localization"
         :done="step > 4"
       >
-        <ProductLocalization :model.sync="model" />
+        <ProductLocalization
+          ref="localizationForm"
+          :model.sync="model"
+          @validate="value => onValidate('localization', value)"
+        />
       </QStep>
 
       <template v-slot:navigation>
         <QStepperNavigation>
           <QBtn
             color="secondary"
-            :label="step === 4 ? 'Finish' : 'Continue'"
-            @click="$refs.stepper.next()"
+            :label="step === 4 ? 'Salvar' : 'Continue'"
+            @click="onNextStep"
           />
 
           <QBtn
@@ -70,6 +85,7 @@
 <script>
 // TODO: implementar captura de latitude e longitude do usuário, para pegar os restantes dos dados e assim exibí-los no form
 import { QStepper, QStepperNavigation, QStep } from 'quasar'
+import { set, identity } from 'lodash'
 import StepsComponents from './steps'
 import Components from './components'
 
@@ -90,26 +106,66 @@ export default {
       category: null,
       is_online: false,
       value: null
+    },
+    hasErrors: {
+      generalInfo: false,
+      localization: false
     }
   }),
   computed: {
     isOnlineProduct () {
       return this.model.is_online
+    },
+    finishedSteps () {
+      return this.step === 4
     }
   },
   methods: {
     onSubmit () {
-      // Esta função só será invocada quando o formulário estiver corretamente preenchido
-      this.$emit('data', { ...this.model })
+      return this.execValidations()
+        .then(() => {
+          this.$emit('data', { ...this.model })
+        })
+        .catch(err => {
+          console.error(err.message)
+
+          this.$q.notify({
+            color: 'red-5',
+            textColor: 'white',
+            icon: 'fas fa-exclamation-triangle',
+            message: 'Há erros no preenchimento do formulário'
+          })
+        })
     },
-    onReset () {
-      // Esta função tem como objetivo resetar os dados do formulário
-      this.model = {
-        ...this.$options.data().model
+    onNextStep () {
+      if (this.finishedSteps) {
+        return this.onSubmit()
       }
+
+      if (this.step === 2) {
+        this.$refs.generalInfoForm.validate()
+      }
+
+      if (this.step === 4) {
+        this.$refs.localizationForm.validate()
+      }
+
+      this.$refs.stepper.next()
     },
-    clear () {
-      this.onReset()
+    execValidations () {
+      // TODO: implementar validações e mostrar em qual etapa contem-se erros
+      return new Promise((resolve, reject) => {
+        const val = Object.values(this.hasErrors).every(identity)
+        if (val) {
+          return resolve(val)
+        }
+
+        return reject(new Error('Erros na validação de form...'))
+      })
+    },
+    onValidate (path, value) {
+      // console.log({ path, value })
+      set(this.hasErrors, path, value)
     }
   }
 }
