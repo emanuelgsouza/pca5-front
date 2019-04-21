@@ -1,13 +1,12 @@
 <template>
   <div>
-    <p class="text-h6"> Cadastre aqui o produto </p>
-
+    <!-- <p class="text-h6"> Cadastre aqui o produto </p> -->
     <CreateProductForm ref="form" @data="onData" />
   </div>
 </template>
 
 <script>
-import CreateProductForm from '../../../../domains/Product/components/Form/Create'
+import CreateProductForm from 'src/domains/Product/components/Form/Create'
 
 export default {
   components: { CreateProductForm },

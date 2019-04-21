@@ -11,8 +11,8 @@
         </q-toolbar-title>
 
         <QBtn
-          @click="goToLogin"
           round
+          flat
           :to="{ name: 'dashboard.register.login' }"
           icon="navigation"
         />
