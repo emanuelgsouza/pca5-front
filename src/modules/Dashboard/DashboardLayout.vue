@@ -11,7 +11,6 @@
         </q-toolbar-title>
 
         <QBtn
-          @click="goToLogin"
           round
           :to="{ name: 'dashboard.register.login' }"
           icon="navigation"
@@ -32,7 +31,6 @@
 
   </q-layout>
 </template>
-
 <script>
 import FloatingButton from './components/FloatingButton'
 import { QBtn } from 'quasar'

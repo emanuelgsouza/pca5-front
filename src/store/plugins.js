@@ -10,6 +10,7 @@ const initializeApp = async store => {
   const value = await getWasLogin()
   store.commit(`auth/${TYPES.SET_WAS_LOGIN}`, value)
 
+  // firebase.initializeApp()
   firebase.auth().onAuthStateChanged(async user => {
     console.log('User information loaded')
 
