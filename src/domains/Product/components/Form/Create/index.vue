@@ -86,6 +86,7 @@
 // TODO: implementar captura de latitude e longitude do usuário, para pegar os restantes dos dados e assim exibí-los no form
 import { QStepper, QStepperNavigation, QStep } from 'quasar'
 import { set, identity } from 'lodash'
+import { mapActions } from 'vuex'
 import StepsComponents from './steps'
 import Components from './components'
 
@@ -121,6 +122,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('application', ['loadCoordinates', 'loadCategories']),
     onSubmit () {
       return this.execValidations()
         .then(() => {
@@ -167,6 +169,11 @@ export default {
       // console.log({ path, value })
       set(this.hasErrors, path, value)
     }
+  },
+  mounted () {
+    this.loadCoordinates()
+
+    this.loadCategories()
   }
 }
 </script>

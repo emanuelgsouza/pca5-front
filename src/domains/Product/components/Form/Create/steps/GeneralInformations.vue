@@ -43,16 +43,22 @@
 
 <script>
 import StepsMixin from '../mixins/steps'
+import { mapState } from 'vuex'
 
 export default {
   name: 'GeneralInformations',
   mixins: [ StepsMixin ],
-  data: () => ({
-    optionsToCategory: [
-      { label: 'Moda', value: 'modal' },
-      { label: 'Comida', value: 'comida' }
-    ]
-  })
+  computed: {
+    ...mapState('application', ['categories']),
+    optionsToCategory () {
+      return this.categories.map(category => {
+        return {
+          value: category.id,
+          label: category.name
+        }
+      })
+    }
+  }
 }
 </script>
 
