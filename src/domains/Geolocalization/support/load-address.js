@@ -1,4 +1,5 @@
-// import http from 'src/services/http'
+import axios from 'axios'
+import parseHereMapsData from './parse-here-maps-data'
 
 /**
  * @method loadAddress
@@ -7,14 +8,17 @@
  * @return {Promise<Object>}
  */
 const loadAddress = (lat, lon) => {
-  // return http
-  //   .get(`/geolocation?lat=${lat}&lon=${lon}`)
-  return Promise.resolve({
-    state: 'Rio de Janeiro',
-    city: 'Duque de Caxias',
-    address: 'Rua Sem Número',
-    number: 20
-  })
+  const params = {
+    prox: `${lat},${lon}`,
+    mode: 'retrieveAddresses',
+    maxresults: 1,
+    app_id: process.env.HERE_APP_ID,
+    app_code: process.env.HERE_APP_CODE
+  }
+  return axios
+    .get('https://reverse.geocoder.api.here.com/6.2/reversegeocode.json', { params })
+    .then(axiosResponse => axiosResponse.data)
+    .then(parseHereMapsData)
 }
 
 export default loadAddress
