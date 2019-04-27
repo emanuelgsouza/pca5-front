@@ -7,6 +7,7 @@
 
 <script>
 import CreateProductForm from 'src/domains/Product/components/Form/Create'
+import { createProduct } from 'src/domains/Product/services/actions'
 
 export default {
   components: { CreateProductForm },
@@ -16,9 +17,9 @@ export default {
   methods: {
     onData (model) {
       // Função responsável por fazzer a requisição para a API
-      this.models = { ...model }
+      this.model = { ...model }
 
-      return Promise.resolve(true)
+      return createProduct(this.model)
         .then(() => {
           this.$q.notify({
             color: 'green-4',
@@ -28,6 +29,10 @@ export default {
           })
 
           this.$refs.form.clear()
+
+          this.$router.push({
+            name: 'dashboard'
+          })
         })
         .catch(err => {
           console.error(err)

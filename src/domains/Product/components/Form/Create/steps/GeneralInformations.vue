@@ -7,6 +7,7 @@
         label="Nome"
         :value="model.name"
         lazy-rules
+        hint="Obrigatório"
         :rules="[
           val => val !== null && val !== '' || 'Não esqueça de colocar o nome do produto'
         ]"
@@ -20,9 +21,9 @@
         :min="0"
         :value="model.value"
         lazy-rules
+        hint="Obrigatório"
         :rules="[
-          val => val !== null || 'Não esqueça de colocar um preço para o produto',
-          val => val > 0 && val < 100 || 'Defina um valor verídico para o produto'
+          val => val !== null || 'Não esqueça de colocar um preço para o produto'
         ]"
         @input="value => updateModel('value', value)"
       />
@@ -31,6 +32,7 @@
         label="Categoria"
         :options="optionsToCategory"
         :value="model.category"
+        hint="Obrigatório"
         lazy-rules
         :rules="[
           val => val !== null || 'Não esqueça de definir uma categoria para o produto'

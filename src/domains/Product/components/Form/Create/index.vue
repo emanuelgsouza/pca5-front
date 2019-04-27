@@ -24,7 +24,7 @@
         :name="2"
         title="Nos dê mais informações sobre ele"
         icon="info"
-        :error="hasErrors.generalInfo"
+        :error="!hasErrors.generalInfo"
         :done="step > 2"
       >
         <GeneralInformations
@@ -50,7 +50,7 @@
         :name="4"
         title="Como podemos encontrar esse produto?"
         icon="navigation"
-        :error="hasErrors.localization"
+        :error="!hasErrors.localization"
         :done="step > 4"
       >
         <ProductLocalization
@@ -64,7 +64,7 @@
         <QStepperNavigation>
           <QBtn
             color="secondary"
-            :label="step === 4 ? 'Salvar' : 'Continue'"
+            :label="finishedSteps ? 'Salvar' : 'Continue'"
             @click="onNextStep"
           />
 
@@ -89,6 +89,7 @@ import { set, identity } from 'lodash'
 import { mapActions } from 'vuex'
 import StepsComponents from './steps'
 import Components from './components'
+import { DEFAULT_PRODUCT_DATA } from '../../../support/constants'
 
 export default {
   name: 'CreateProductForm',
@@ -101,16 +102,10 @@ export default {
   },
   data: () => ({
     step: 1,
-    model: {
-      name: null,
-      url: null,
-      category: null,
-      is_online: false,
-      value: null
-    },
+    model: { ...DEFAULT_PRODUCT_DATA },
     hasErrors: {
-      generalInfo: false,
-      localization: false
+      generalInfo: true,
+      localization: true
     }
   }),
   computed: {
@@ -131,28 +126,31 @@ export default {
         .catch(err => {
           console.error(err.message)
 
-          this.$q.notify({
-            color: 'red-5',
-            textColor: 'white',
-            icon: 'fas fa-exclamation-triangle',
-            message: 'Há erros no preenchimento do formulário'
-          })
+          this.notifyError('Há erros no preenchimento do formulário')
         })
     },
-    onNextStep () {
-      if (this.finishedSteps) {
-        return this.onSubmit()
-      }
+    async onNextStep () {
+      try {
+        if (this.step === 2) {
+          await this.$refs.generalInfoForm.validate()
+        }
 
-      if (this.step === 2) {
-        this.$refs.generalInfoForm.validate()
-      }
+        if (this.step === 4) {
+          await this.$refs.localizationForm.validate()
+        }
 
-      if (this.step === 4) {
-        this.$refs.localizationForm.validate()
-      }
+        if (this.finishedSteps) {
+          return this.onSubmit()
+        }
 
-      this.$refs.stepper.next()
+        this.$nextTick(() => {
+          this.$refs.stepper.next()
+        })
+      } catch (err) {
+        console.error(err)
+
+        this.notifyError('Há erros no preenchimento do formulário')
+      }
     },
     execValidations () {
       // TODO: implementar validações e mostrar em qual etapa contem-se erros
@@ -166,8 +164,18 @@ export default {
       })
     },
     onValidate (path, value) {
-      // console.log({ path, value })
       set(this.hasErrors, path, value)
+    },
+    clear () {
+      this.model = { ...this.$options.data().model }
+    },
+    notifyError (message) {
+      this.$q.notify({
+        color: 'red-5',
+        textColor: 'white',
+        icon: 'fas fa-exclamation-triangle',
+        message
+      })
     }
   },
   mounted () {

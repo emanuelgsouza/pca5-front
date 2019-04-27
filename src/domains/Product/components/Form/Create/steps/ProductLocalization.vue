@@ -1,10 +1,18 @@
 <template>
   <div class="product-localization">
-    <!-- <QToogle /> -->
-
-    <!-- Ao entrar nesta etapa, capturar os dados de localização do usuário -->
-
     <QForm ref="form">
+      <QInput
+        dense
+        label="Nome do local"
+        :value="model.place"
+        lazy-rules
+        hint="Obrigatório"
+        :rules="[
+          val => val !== null || 'É necessário informar o nome do local'
+        ]"
+        @input="value => updateModel('place', value)"
+      />
+
       <QInput
         dense
         v-if="isOnlineProduct"
@@ -13,31 +21,64 @@
         @input="value => updateModel('url', value)"
       />
     </QForm>
+
+    <LocalizationInfo
+      ref="localizationForm"
+      v-if="!isOnlineProduct"
+      :model.sync="model.localization"
+    />
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import { identity } from 'lodash'
+import LocalizationInfo from 'src/domains/Geolocalization/components/LocalizationInfo'
 import StepsMixin from '../mixins/steps'
 
 export default {
   name: 'ProductLocalization',
   mixins: [ StepsMixin ],
+  components: { LocalizationInfo },
   data: () => ({
     geolocalization: {}
   }),
   methods: {
-    ...mapActions('application', ['loadAddress'])
+    ...mapActions('application', ['loadAddress']),
+    validate () {
+      const validations = [ this.$refs.form.validate() ]
+
+      if (!this.isOnlineProduct) {
+        validations.push(this.$refs.localizationForm.validate())
+      }
+
+      return Promise.all(validations)
+        .then(listOfSuccess => {
+          const success = listOfSuccess.every(identity)
+
+          this.$emit('validate', success)
+
+          if (success) {
+            return Promise.resolve(success)
+          }
+
+          return Promise.reject(new Error('Campos de Localização mal informados'))
+        })
+    }
   },
   mounted () {
+    if (this.isOnlineProduct) {
+      return
+    }
+
     this.$q.loading.show({
       message: 'Pegando o endereço...'
     })
 
     this.loadAddress()
       .then(res => {
-        console.log({ res })
         this.geolocalization = { ...res }
+        this.updateModel('localization', { ...res })
         this.$q.loading.hide()
       })
       .catch(err => {

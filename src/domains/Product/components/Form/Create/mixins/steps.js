@@ -36,8 +36,7 @@ export default {
       if (this.$refs.form) {
         return this.$refs.form.validate()
           .then(success => {
-            console.log({ success })
-            this.$emit('validate', !success)
+            this.$emit('validate', success)
 
             if (success) {
               return Promise.resolve(success)
