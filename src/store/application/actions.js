@@ -1,4 +1,6 @@
+import { isNil } from 'lodash'
 import load from 'src/domains/Geolocalization/support/load-coordinates'
+import getAddress from 'src/domains/Geolocalization/support/load-address'
 import getCategories from 'src/domains/Categories/support/load-categories'
 import * as TYPES from './mutation-types'
 
@@ -27,4 +29,15 @@ export function loadCategories ({ commit }) {
 
       commit(TYPES.SET_ERROR, erroObj)
     })
+}
+
+export function loadAddress ({ state }) {
+  const { coordinates } = state
+  const { lat, lon } = coordinates
+
+  if (isNil(lat) || isNil(lon)) {
+    return Promise.resolve(true)
+  }
+
+  return getAddress(lat, lon)
 }
