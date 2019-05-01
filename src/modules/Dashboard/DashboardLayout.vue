@@ -11,9 +11,10 @@
         </q-toolbar-title>
 
         <QBtn
+          flat
           round
-          :to="{ name: 'dashboard.register.login' }"
-          icon="navigation"
+          icon="fab fa-google"
+          @click="onLogin"
         />
 
       </q-toolbar>
@@ -34,6 +35,7 @@
 <script>
 import FloatingButton from './components/FloatingButton'
 import { QBtn } from 'quasar'
+import { loginWithGoogle } from 'src/services/firebase/auth'
 
 export default {
   name: 'DashboardLayout',
@@ -42,7 +44,12 @@ export default {
       left: false
     }
   },
-  components: { FloatingButton, QBtn }
+  components: { FloatingButton, QBtn },
+  methods: {
+    onLogin () {
+      loginWithGoogle()
+    }
+  }
 }
 </script>
 

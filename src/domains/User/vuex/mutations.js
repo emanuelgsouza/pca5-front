@@ -1,30 +1,30 @@
 import * as TYPES from './mutation-types'
 
 export default {
-  [ TYPES.SET_USER ] (store, obj) {
-    store.user = obj
+  [ TYPES.SET_USER ] (state, obj) {
+    state.user = obj
   },
-  [ TYPES.SET_TOKEN ] (store, token) {
-    store.token = token
+  [ TYPES.SET_TOKEN ] (state, token) {
+    state.token = token
   },
-  [ TYPES.CLEAR_USER ] (store) {
-    store.user = null
-    store.token = null
+  [ TYPES.CLEAR_USER ] (state) {
+    state.user = null
+    state.token = null
   },
-  [ TYPES.CLEAR_ERROR ] (store) {
-    store.error = false
-    store.error_message = null
+  [ TYPES.CLEAR_ERROR ] (state) {
+    state.error = false
+    state.error_message = null
   },
-  [ TYPES.SET_USER_LOADING ] (store) {
+  [ TYPES.SET_USER_LOADING ] (state) {
     console.log('auth/setUserLoading')
-    store.loadingUser = true
+    state.loadingUser = true
   },
-  [ TYPES.CLEAR_USER_LOADING ] (store) {
+  [ TYPES.CLEAR_USER_LOADING ] (state) {
     console.log('auth/clearUserLoading')
-    store.loadingUser = false
+    state.loadingUser = false
   },
-  [ TYPES.SET_WAS_LOGIN ] (store, value) {
+  [ TYPES.SET_WAS_LOGIN ] (state, value) {
     console.log('auth/setWasLogin: ' + value)
-    store.wasLogin = value
+    state.wasLogin = value
   }
 }

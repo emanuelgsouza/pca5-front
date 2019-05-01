@@ -16,9 +16,9 @@ export default [
         component: () => import('../Pages/Login/Index.vue')
       },
       {
-        path: '/dashboard/pages/login/sigup', // Rota do sigUp
-        name: 'dashboard.register.sigup',
-        component: () => import('../Pages/Login/SigUp.vue')
+        path: '/dashboard/pages/login/update', // Rota do sigUp
+        name: 'dashboard.register.update',
+        component: () => import('../Pages/Login/Update.vue')
       },
       {
         path: '/dashboard/register',
