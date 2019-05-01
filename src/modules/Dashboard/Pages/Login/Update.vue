@@ -48,7 +48,7 @@ export default {
     return {
       name: '',
       email: '',
-      date: '',
+      date: '2019/05/01', // Modificar para dateNow()
       options: [
         'Masculino', 'Feminino', 'Outro'
       ],
