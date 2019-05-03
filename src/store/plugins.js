@@ -14,8 +14,6 @@ const initializeApp = async store => {
 
   console.log('User information loaded')
 
-  console.log({ user })
-
   // await wasLogin(false)
 
   if (!user) {
