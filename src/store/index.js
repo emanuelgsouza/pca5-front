@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import auth from 'src/domains/User/vuex'
 import plugins from './plugins'
 
-// import example from './module-example'
+import application from './application'
 
 Vue.use(Vuex)
 
@@ -15,7 +15,8 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      auth
+      auth,
+      application
     },
     plugins
   })

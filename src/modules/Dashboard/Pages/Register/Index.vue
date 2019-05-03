@@ -16,7 +16,7 @@
         label="Serviço" />
     </QTabs>
 
-    <div class="register_wrapper q-pa-md q-gutter-md">
+    <div class="register_wrapper">
       <router-view />
     </div>
   </QPage>
