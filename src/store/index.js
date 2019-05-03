@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import auth from 'src/domains/User/vuex'
+import plugins from './plugins'
 
 // import example from './module-example'
 
@@ -13,12 +15,9 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      // example
+      auth
     },
-
-    // enable strict mode (adds overhead!)
-    // for dev mode only
-    strict: process.env.DEV
+    plugins
   })
 
   return Store

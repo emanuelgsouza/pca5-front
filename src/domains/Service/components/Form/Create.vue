@@ -25,7 +25,7 @@
         val => val > 0 && val < 100 || 'Defina um valor verídico para o serviço'
     ]" />
 
-    <q-btn-toggle
+    <QBtnToggle
       v-model="model.is_online"
       label="O serviço é de uma loja física ou online?"
       toggle-color="primary"
@@ -44,6 +44,7 @@
 
       <!-- Input de servico offline (Model.en seria o endereco)-->
     <QToggle
+      v-if="isOfflineService"
       v-model="model.is_offline"
       label="Buscar por geolocalização ?" />
 
@@ -71,7 +72,7 @@
         />
 
     <QInput
-      v-model="area"
+      v-model="model.area"
       filled
       label="Descricao"
       type="textarea" :max-height="140"

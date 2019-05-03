@@ -11,9 +11,14 @@ export default [
         component: () => import('../Pages/Index.vue')
       },
       {
-        path: '/dashboard/register/login',
+        path: '/dashboard/pages/login/login', // Rota do login
         name: 'dashboard.register.login',
-        component: () => import('../Pages/Login/index.vue')
+        component: () => import('../Pages/Login/Index.vue')
+      },
+      {
+        path: '/dashboard/pages/login/update', // Rota do sigUp
+        name: 'dashboard.register.update',
+        component: () => import('../Pages/Login/Update.vue')
       },
       {
         path: '/dashboard/register',
