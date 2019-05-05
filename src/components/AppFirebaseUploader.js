@@ -74,6 +74,8 @@ export default {
 
         this.isUploadingFilesToFirebase = true
 
+        this.$emit('filename', this.internalFile.filename)
+
         this.internalFileRef.on('state_changed', snapshot => {
           this.uploadedSize = snapshot.bytesTransferred
         }, err => {

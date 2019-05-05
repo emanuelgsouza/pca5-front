@@ -84,13 +84,13 @@
 </template>
 
 <script>
-// TODO: implementar captura de latitude e longitude do usuário, para pegar os restantes dos dados e assim exibí-los no form
 import { QStepper, QStepperNavigation, QStep } from 'quasar'
-import { set, identity } from 'lodash'
+import { set, identity, isEmpty } from 'lodash'
 import { mapActions } from 'vuex'
 import StepsComponents from './steps'
 import Components from './components'
 import { DEFAULT_PRODUCT_DATA } from '../../../support/constants'
+import storage from 'src/services/firebase/storage'
 
 export default {
   name: 'CreateProductForm',
@@ -107,7 +107,8 @@ export default {
     hasErrors: {
       generalInfo: true,
       localization: true
-    }
+    },
+    save: false
   }),
   computed: {
     isOnlineProduct () {
@@ -115,6 +116,12 @@ export default {
     },
     finishedSteps () {
       return this.step === 4
+    },
+    hasImageUrl () {
+      return !isEmpty(this.model.url)
+    },
+    hasImageFilename () {
+      return !isEmpty(this.model.image_file_name)
     }
   },
   methods: {
@@ -122,6 +129,7 @@ export default {
     onSubmit () {
       return this.execValidations()
         .then(() => {
+          this.save = true
           this.$emit('data', { ...this.model })
         })
         .catch(err => {
@@ -174,7 +182,6 @@ export default {
       }
     },
     execValidations () {
-      // TODO: implementar validações e mostrar em qual etapa contem-se erros
       return new Promise((resolve, reject) => {
         const val = Object.values(this.hasErrors).every(identity)
         if (val) {
@@ -197,12 +204,36 @@ export default {
         icon: 'fas fa-exclamation-triangle',
         message
       })
+    },
+    cleanUp () {
+      console.log('Cleanup')
+      this.deleteImage()
+    },
+    deleteImage () {
+      // Has a image and not save this form
+      if (this.hasImageFilename && !this.save) {
+        console.log('Deleting image that was uploaded')
+
+        return storage
+          .ref()
+          .child(this.model.image_file_name)
+          .delete()
+          .then(() => {
+            console.log('Image deleted')
+          })
+          .catch(() => {
+            console.error('Image do not was deleted')
+          })
+      }
     }
   },
   mounted () {
     this.loadCoordinates()
 
     this.loadCategories()
+  },
+  beforeDestroy () {
+    this.cleanUp()
   }
 }
 </script>

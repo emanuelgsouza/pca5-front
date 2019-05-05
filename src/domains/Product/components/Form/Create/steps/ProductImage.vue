@@ -6,6 +6,7 @@
       class="q-mt-xs"
       accept=".jpg, image/*"
       ref="firebaseUploader"
+      @filename="onFilename"
       @downloadURL="onDownloadURL"
     />
   </div>
@@ -20,6 +21,9 @@ export default {
   name: 'ProductImage',
   mixins: [ StepsMixin ],
   components: { AppFirebaseUploader },
+  props: {
+    imageFilename: String
+  },
   computed: {
     hasDownloadUrl () {
       return !isEmpty(this.model.url)
@@ -41,6 +45,10 @@ export default {
     onDownloadURL (downloadUrl) {
       // use the same protocol in other steps: update model prop
       this.updateModel('url', downloadUrl)
+    },
+    onFilename (filename) {
+      // use the same protocol in other steps: update model prop
+      this.updateModel('image_file_name', filename)
     }
   },
   mounted () {

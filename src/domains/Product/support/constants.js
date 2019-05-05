@@ -1,6 +1,7 @@
 export const DEFAULT_PRODUCT_DATA = {
   name: null,
   url: null,
+  image_file_name: null,
   category: null,
   is_online: false,
   value: null,
