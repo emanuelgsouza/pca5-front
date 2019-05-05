@@ -142,13 +142,17 @@ export default {
           this.$q.loading.show({
             message: 'Aguarde enquanto fazemos o upload da imagem'
           })
+
           await this.$refs.productImage.upload()
 
           this.$q.loading.hide()
-          this.$q.notify({
-            message: 'A imagem chegou em nossos serviço',
-            color: 'positive'
-          })
+
+          if (this.model.url) {
+            this.$q.notify({
+              message: 'A imagem chegou em nossos serviço',
+              color: 'positive'
+            })
+          }
         }
 
         // Localization: wait form validations

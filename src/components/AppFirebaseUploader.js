@@ -1,6 +1,6 @@
 // MyUploader.js
 import { QUploaderBase } from 'quasar'
-import { first, last, isFunction } from 'lodash'
+import { first, last, isFunction, isEmpty } from 'lodash'
 import uuid from 'uuid'
 import storage from 'src/services/firebase/storage'
 
@@ -44,6 +44,9 @@ export default {
     },
     internalFile () {
       return first(this.internalFiles)
+    },
+    hasInternalFIle () {
+      return !isEmpty(this.internalFile)
     }
   },
   methods: {
@@ -60,6 +63,10 @@ export default {
       // If necessary upload image, will be here to update
       if (this.canUpload) {
         // ...
+      }
+
+      if (!this.hasInternalFIle) {
+        return Promise.resolve(null)
       }
 
       return new Promise((resolve, reject) => {
