@@ -56,27 +56,35 @@ export default {
       }
     },
     // [REQUIRED]
-    async upload () {
-      this.internalFileRef = this.internalFile.ref.put(this.internalFile.file)
+    upload () {
+      // If necessary upload image, will be here to update
+      if (this.canUpload) {
+        // ...
+      }
 
-      this.isUploadingFilesToFirebase = true
+      return new Promise((resolve, reject) => {
+        this.internalFileRef = this.internalFile.ref.put(this.internalFile.file)
 
-      this.internalFileRef.on('state_changed', snapshot => {
-        this.uploadedSize = snapshot.bytesTransferred
-      }, err => {
-        this.$q.notify({
-          message: 'Não foi possível subir a imagem para o nosso serviço',
-          color: 'negative'
+        this.isUploadingFilesToFirebase = true
+
+        this.internalFileRef.on('state_changed', snapshot => {
+          this.uploadedSize = snapshot.bytesTransferred
+        }, err => {
+          this.$q.notify({
+            message: 'Não foi possível subir a imagem para o nosso serviço',
+            color: 'negative'
+          })
+          this.isUploadingFilesToFirebase = false
+
+          reject(err)
+        }, () => {
+          this.internalFileRef.snapshot.ref.getDownloadURL().then(downloadURL => {
+            this.$emit('downloadURL', downloadURL)
+            resolve(downloadURL)
+          })
+
+          this.isUploadingFilesToFirebase = false
         })
-        this.isUploadingFilesToFirebase = false
-        console.error(err)
-      }, () => {
-        this.internalFileRef.snapshot.ref.getDownloadURL().then(downloadURL => {
-          console.log('File available at', downloadURL)
-          this.$emit('downloadURL', downloadURL)
-        })
-
-        this.isUploadingFilesToFirebase = false
       })
     }
   }

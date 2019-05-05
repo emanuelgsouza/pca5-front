@@ -41,6 +41,7 @@
         :done="step > 3"
       >
         <ProductImage
+          ref="productImage"
           :model.sync="model"
           @nextStep="$refs.stepper.next()"
         />
@@ -131,10 +132,26 @@ export default {
     },
     async onNextStep () {
       try {
+        // General informations: wait form validations
         if (this.step === 2) {
           await this.$refs.generalInfoForm.validate()
         }
 
+        // Product Image: wait image upload
+        if (this.step === 3) {
+          this.$q.loading.show({
+            message: 'Aguarde enquanto fazemos o upload da imagem'
+          })
+          await this.$refs.productImage.upload()
+
+          this.$q.loading.hide()
+          this.$q.notify({
+            message: 'A imagem chegou em nossos serviço',
+            color: 'positive'
+          })
+        }
+
+        // Localization: wait form validations
         if (this.step === 4) {
           await this.$refs.localizationForm.validate()
         }
