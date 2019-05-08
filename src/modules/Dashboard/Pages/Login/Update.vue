@@ -25,11 +25,13 @@
             :options="options"
             label="Sexo"
             required
+            map-options
+            emit-value
           />
 
           <QInput
             filled
-            v-model="model.date"
+            v-model="model.birthday"
             mask="date"
             :rules="['date']"
             required
@@ -37,7 +39,10 @@
             <template v-slot:append>
               <QIcon name="event" class="cursor-pointer">
                 <QPopupProxy>
-                  <QDate v-model="model.date" />
+                  <QDate
+                    :value="model.birthday"
+                    @input="onDateInput"
+                  />
                 </QPopupProxy>
               </QIcon>
             </template>
@@ -56,9 +61,10 @@
 
 <script>
 import { QInput, QSelect, QDate, QPopupProxy, QForm } from 'quasar'
-import InjectUser from 'src/domains/User/mixins/inject-user'
+import { get } from 'lodash'
+import moment from 'moment'
 import updateUser from 'src/domains/User/actions/update'
-// import firebase from 'firebase'
+import InjectUser from 'src/domains/User/mixins/inject-user'
 
 export default {
   name: 'FinishRegister',
@@ -71,19 +77,30 @@ export default {
       model: {
         name: '',
         email: '',
-        gender: 'Masculino',
-        date: '2019/05/01', // Modificar para dateNow()
+        gender: 'M',
+        birthday: moment().format('YYYY-MM-DD'),
         is_first_login: false
       },
       options: [
-        'Masculino', 'Feminino', 'Outro'
+        {
+          label: 'Masculino',
+          value: 'M'
+        },
+        {
+          label: 'Feminino',
+          value: 'F'
+        },
+        {
+          label: 'Outro',
+          value: 'O'
+        }
       ]
     }
   },
   methods: {
     fillUser (user) {
-      this.model.name = user.name
-      this.model.email = user.email
+      this.model.name = get(user, 'name')
+      this.model.email = get(user, 'email')
     },
     finishRegister () {
       updateUser(this.model)
@@ -95,6 +112,9 @@ export default {
         .catch(() => {
           this.$q.notify({ color: 'negative', message: 'Deu ruim !' })
         })
+    },
+    onDateInput (val) {
+      this.model.birthday = moment(val).format('YYYY-MM-DD')
     }
   },
   mixins: [

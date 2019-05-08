@@ -1,32 +1,32 @@
-// import http from 'src/services/http'
-// import { setToken } from 'services/http/client'
+import { get } from 'lodash'
+import http from 'src/services/http'
+import { setToken } from 'src/services/http/client'
 import * as TYPES from './mutation-types'
 import factoryUser from 'src/domains/User/support/factory-user'
 
 export const login = ({ commit, dispatch }, userObject) => {
-  commit(TYPES.SET_USER, factoryUser(userObject))
-  return dispatch('loadUserInformation')
-  // return http
-  //   .post('/login', userObject)
-  //   .then(token => {
-  //     setToken(token)
+  const user = factoryUser(userObject)
+  commit(TYPES.SET_USER, user)
+  return http
+    .post('/auth/login', user)
+    .then(data => {
+      setToken(get(data, 'data.token', ''))
 
-  //     return dispatch('getMe')
-  //   })
-  //   .catch(err => {
-  //     commit(TYPES.SET_ERROR, err.message)
-  //     commit(TYPES.CLEAR_USER_LOADING)
+      return dispatch('loadUserInformation')
+    })
+    .catch(err => {
+      commit(TYPES.SET_ERROR, err.message)
+      commit(TYPES.CLEAR_USER_LOADING)
 
-  //     return Promise.reject(err.message)
-  //   })
+      return Promise.reject(err.message)
+    })
 }
 
 export const loadUserInformation = ({ commit, state }) => {
-  // return http
-  // .get('/me')
-  // @TODO: remover a chamada de state
-  return Promise.resolve(state.user)
-    .then(user => {
+  return http
+    .get('/auth/me')
+    .then(data => {
+      const user = get(data, 'data.user', {})
       commit(TYPES.CLEAR_USER_LOADING)
       commit(TYPES.SET_USER, user)
 

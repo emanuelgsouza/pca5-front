@@ -1,6 +1,3 @@
-export default user => {
-  return Promise.resolve({
-    ...user,
-    is_first_login: false
-  })
-}// Mexer nessa treta futuramente
+import http from 'src/services/http'
+
+export default user => http.post('/auth/update', user)
