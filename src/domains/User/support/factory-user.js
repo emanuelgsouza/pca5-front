@@ -10,7 +10,7 @@ const factoryUser = userFromGoogle => {
     email: userFromGoogle.email,
     uid: userFromGoogle.uid,
     birthday: null,
-    gender: null
+    gender: 'M'
   }
 }
 
