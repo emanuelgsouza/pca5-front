@@ -7,7 +7,8 @@
 
 <script>
 import CreateProductForm from 'src/domains/Product/components/Form/Create'
-import { createProduct } from 'src/domains/Product/services/actions'
+import { createPost } from 'src/services/actions'
+import { omit } from 'lodash'
 
 export default {
   components: { CreateProductForm },
@@ -18,8 +19,12 @@ export default {
     onData (model) {
       // Função responsável por fazzer a requisição para a API
       this.model = { ...model }
+      const type = this.model.is_online ? 'po' : 'pf'
 
-      return createProduct(this.model)
+      // @TODO: inserir o campo de localization quando enviar
+      const _data = omit(this.model, ['localization'])
+
+      return createPost(_data, type)
         .then(() => {
           this.$q.notify({
             color: 'green-4',
