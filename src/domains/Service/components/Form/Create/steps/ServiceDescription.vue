@@ -1,12 +1,12 @@
 <template>
   <div class="service-description">
     <QInput
-      filled
       autogrow
       :value="model.description"
       type="textarea"
       v-model="text"
       label="Descrição"
+      hint="Opcional"
       placeholder="Adicione uma pequena descrição"
       :rules="[ val => val.length <= 140 || 'Insira no máximo 140 caracteres!']"
     />

@@ -64,8 +64,8 @@ export default {
   mixins: [ StepMixin ],
   computed: {
     ...mapState('application', ['categories']),
-    opyionsToCategory () {
-      return this.categories.amp(category => {
+    optionsToCategory () {
+      return this.categories.map(category => {
         return {
           value: category.id,
           label: category.name

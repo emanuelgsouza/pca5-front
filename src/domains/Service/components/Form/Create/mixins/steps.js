@@ -27,7 +27,7 @@ export default {
     },
     validate () {
       if (this.$refs.form) {
-        return this.$refs.form.validade()
+        return this.$refs.form.validate()
           .then(success => {
             this.$emit('validate', success)
 

@@ -1,7 +1,6 @@
 <template>
   <div class="create-service-stepper">
-    <ServiceWarning :model="model" />
-
+    <!-- <ServiceWarning :model="model" /> -->
     <QStepper
       v-model="step"
       animated
@@ -16,9 +15,9 @@
         title="Nos dê algumas informações sobre ele"
         icon="info"
         :error="!hasErrors.generalInfo"
-        :done="step > 2"
+        :done="step > 1"
       >
-        <GeneralInformations
+        <GeneralInformation
           ref="generalInfoForm"
           :model.sync="model"
           @validate="value => onValidate('generalInfo', value)"
@@ -27,22 +26,10 @@
 
       <QStep
         :name="2"
-        title="Nos dê uma imagem desse serviço (Opcional)"
-        icon="add_a_photo"
-        :done="step > 3"
-      >
-        <ServiceImage
-          :model.sync="model"
-          @nextStep="$refs.stepper.next()"
-        />
-      </QStep>
-
-      <QStep
-        :name="3"
         title="Como podemos encontrar esse serviço ?"
         icon="navigation"
         :error="!hasErrors.localization"
-        :done="step > 4"
+        :done="step > 2"
       >
         <ServiceLocalization
           ref="localizationForm"
@@ -53,14 +40,13 @@
       </QStep>
 
       <QStep
-        :name="4"
+        :name="3"
         title="Informe uma pequena descrição para ele"
         icon="info"
       >
         <ServiceDescription
           ref="ServiceDescription"
           :model.sync="model"
-
         />
       </QStep>
 
@@ -91,7 +77,7 @@ import { QStepper, QStepperNavigation, QStep } from 'quasar'
 import { set, identity } from 'lodash'
 import { mapActions } from 'vuex'
 import StepsComponents from './steps'
-import Components from './components'
+// import Components from './components'
 import { DEFAULT_SERVICE_DATA } from '../../../support/constants'
 
 export default {
@@ -99,7 +85,7 @@ export default {
   components: {
     QStepper,
     QStep,
-    ...Components,
+    // ...Components,
     ...StepsComponents,
     QStepperNavigation
   },
@@ -116,7 +102,7 @@ export default {
     //   return this.model.is_online
     // },
     finishedSteps () {
-      return this.step === 4
+      return this.step === 3
     }
   },
   methods: {
@@ -134,11 +120,11 @@ export default {
     },
     async onNextStep () {
       try {
-        if (this.step === 2) {
+        if (this.step === 1) {
           await this.$refs.generalInfoForm.validate()
         }
 
-        if (this.step === 4) {
+        if (this.step === 2) {
           await this.$refs.localizationForm.validate()
         }
 

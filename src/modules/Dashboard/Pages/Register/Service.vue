@@ -1,7 +1,6 @@
 <template>
   <div>
-    <p class="text-h6"> Cadastre aqui o serviço </p>
-
+    <!-- <p class="text-h6"> Cadastre aqui o serviço </p> -->
     <CreateServiceForm ref="form" @data="onData" />
   </div>
 
@@ -18,7 +17,7 @@ export default {
   methods: {
     onData (model) {
       // Requisição para a API
-      this.models = { ...model }
+      this.model = { ...model }
 
       return Promise.resolve(true)
         .then(() => {
@@ -30,6 +29,10 @@ export default {
           })
 
           this.$refs.form.clear()
+
+          this.$router.push({
+            name: 'dashboard'
+          })
         })
         .catch(err => {
           console.error(err)
