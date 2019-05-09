@@ -9,7 +9,7 @@
   <QSeparator/>
 
   <QCardSection>
-    <div> {{serviceDescription}} <div>
+    <div> {{ serviceDescription }} <div>
   <QCardSection>
 
 </QCard>
@@ -37,9 +37,6 @@ export default {
     },
     serviceDescription () {
       return get(this.service, 'description', '')
-    },
-    serviceIsOnLine () {
-      return get(this.service, 'is_online', false)
     },
     serviceIcon () {
       if (this.serviceIsOnLine) {
