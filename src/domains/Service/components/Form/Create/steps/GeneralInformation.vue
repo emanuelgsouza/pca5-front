@@ -45,6 +45,8 @@
         :value="model.category"
         hint="Obrigatório"
         lazy-rules
+        emit-value
+        map-options
         :rules="[
           val => val !== null || 'Não esqueça de definir uma categoria para o serviço'
         ]"

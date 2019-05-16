@@ -8,10 +8,11 @@
 <script>
 import CreateProductForm from 'src/domains/Product/components/Form/Create'
 import { createPost } from 'src/services/actions'
-import { omit } from 'lodash'
+import injectCoordinatesMixin from 'src/domains/Geolocalization/vuex/inject-mixin'
 
 export default {
   components: { CreateProductForm },
+  mixins: [ injectCoordinatesMixin ],
   data: () => ({
     model: {}
   }),
@@ -21,10 +22,7 @@ export default {
       this.model = { ...model }
       const type = this.model.is_online ? 'po' : 'pf'
 
-      // @TODO: inserir o campo de localization quando enviar
-      const _data = omit(this.model, ['localization'])
-
-      return createPost(_data, type)
+      return createPost(this.model, type, this.coordinates)
         .then(() => {
           this.$q.notify({
             color: 'green-4',

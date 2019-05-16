@@ -8,18 +8,21 @@
 
 <script>
 import CreateServiceForm from 'src/domains/Service/components/Form/Create'
+import { createPost } from 'src/services/actions'
+import injectCoordinatesMixin from 'src/domains/Geolocalization/vuex/inject-mixin'
 
 export default {
   components: { CreateServiceForm },
+  mixins: [ injectCoordinatesMixin ],
   data: () => ({
     model: {}
   }),
   methods: {
     onData (model) {
-      // Requisição para a API
       this.model = { ...model }
+      const type = this.model.is_online ? 'po' : 'pf'
 
-      return Promise.resolve(true)
+      return createPost(this.model, type, this.coordinates)
         .then(() => {
           this.$q.notify({
             color: 'green-4',

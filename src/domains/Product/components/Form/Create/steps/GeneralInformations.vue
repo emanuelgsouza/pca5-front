@@ -33,6 +33,8 @@
         :options="optionsToCategory"
         :value="model.category"
         hint="Obrigatório"
+        emit-value
+        map-options
         lazy-rules
         :rules="[
           val => val !== null || 'Não esqueça de definir uma categoria para o produto'

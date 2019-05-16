@@ -1,18 +1,19 @@
-// import http from 'src/services/http'
+import http from 'src/services/http'
+import factoryPost from './factory-post'
 
 /**
  * @method createPost
- * @param  {Object} product
- * @param  {String} tipo
+ * @param  {Object} body
+ * @param  {String} type
  * @return {Promise<Object>}
  */
-export const createPost = (product, tipo) => {
-  return Promise.resolve({ product, tipo })
+export const createPost = (body, type, coordinates) => {
   // @TODO: substituir com a chamada abaixo
-  // return http
-  //   .post('/api/post/add', product, {
-  //     params: {
-  //       tipo
-  //     }
-  //   })
+  const data = factoryPost(body, type, coordinates)
+  return http
+    .post('/api/post/add', data, {
+      params: {
+        tipo: type
+      }
+    })
 }
