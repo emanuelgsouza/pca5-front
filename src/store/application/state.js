@@ -7,5 +7,8 @@ export default {
     error: false,
     errorCode: null,
     errorMessage: null
+  },
+  feed: {
+    data: []
   }
 }

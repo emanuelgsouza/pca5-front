@@ -3,6 +3,7 @@ import load from 'src/domains/Geolocalization/support/load-coordinates'
 import getAddress from 'src/domains/Geolocalization/support/load-address'
 import getCategories from 'src/domains/Categories/support/load-categories'
 import * as TYPES from './mutation-types'
+import { feedDataMock } from 'src/domains/Feed/mock'
 
 export function loadCoordinates ({ commit }) {
   return load()
@@ -40,4 +41,18 @@ export function loadAddress ({ state }) {
   }
 
   return getAddress(lat, lon)
+}
+
+export function loadFeed ({ commit }, payload) {
+  // const filter = payload.filter || {}
+  commit(TYPES.SET_FEED_LOADING, true)
+  // TODO: pensar em quando der merda na execução do código, mostrar um erro para o usuário relacionado ao feed
+
+  return Promise.resolve(feedDataMock)
+    .then(feedData => {
+      console.log({ feedData })
+      commit(TYPES.SET_FEED, feedData)
+      commit(TYPES.SET_FEED_LOADING, false)
+      return Promise.resolve(feedData)
+    })
 }

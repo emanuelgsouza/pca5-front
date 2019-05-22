@@ -2,13 +2,13 @@ export default [
   {
     path: '/dashboard',
     name: 'dashboard',
-    redirect: '/dashboard/index',
+    redirect: '/dashboard/feed',
     component: () => import('../DashboardLayout.vue'),
     children: [
       {
-        path: '/dashboard/index',
-        name: 'dashboard.index',
-        component: () => import('../Pages/Index.vue')
+        path: '/dashboard/feed',
+        name: 'dashboard.feed',
+        component: () => import('../Pages/Feed/Index.vue')
       },
       {
         path: '/dashboard/pages/login/login', // Rota do login

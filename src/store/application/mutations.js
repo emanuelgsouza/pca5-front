@@ -28,5 +28,11 @@ export default {
   [ TYPES.SET_ERROR ] (state, erroObj) {
     state.hasError = true
     state.errorMessage = erroObj.message
+  },
+  [ TYPES.SET_FEED ] (state, feed) {
+    state.feed = { ...feed }
+  },
+  [ TYPES.SET_FEED_LOADING ] (state, loading) {
+    state.feedLoading = loading
   }
 }
