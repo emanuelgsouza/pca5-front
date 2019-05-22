@@ -206,7 +206,6 @@ export default {
       })
     },
     cleanUp () {
-      console.log('Cleanup')
       this.deleteImage()
     },
     deleteImage () {
