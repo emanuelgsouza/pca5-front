@@ -7,7 +7,7 @@
         <q-toolbar-title>
           <router-link
             to="/"
-            class="text-white index_link"> Boadica Plus </router-link>
+            class="text-white index_link"> PCA - Unigranrio </router-link>
         </q-toolbar-title>
 
         <QBtn
