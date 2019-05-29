@@ -43,6 +43,7 @@
         <ProductImage
           ref="productImage"
           :model.sync="model"
+          @next="onNextStep"
           @nextStep="$refs.stepper.next()"
         />
       </QStep>
