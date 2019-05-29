@@ -73,7 +73,6 @@ export default {
       if (this.hasCameraImage) {
         return uploadImage(this.internalCameraImages)
           .then(downloadURL => {
-            console.log(downloadURL)
             return Promise.resolve(downloadURL)
           })
           .catch(err => Promise.reject(err))
@@ -83,27 +82,39 @@ export default {
         message: 'Não há imagem disponível para upload',
         color: 'negative'
       })
+
+      return Promise.reject(new Error('Não há imagem disponível para upload'))
     },
     upload () {
       if (this.hasDownloadUrl) {
         return Promise.resolve(this.model.url)
       }
 
-      // return this.$refs.firebaseUploader.upload()
-      //   .then(downloadUrl => Promise.resolve(downloadUrl))
-      //   .catch(err => Promise.reject(err))
+      const filename = this.internalCameraImages.filename
+      this.onFilename(filename)
+
       return this.uploadCameraImage()
+        .then(downloadURL => {
+          this.onDownloadURL(downloadURL)
+          return Promise.resolve(downloadURL)
+        })
     },
     onDownloadURL (downloadUrl) {
       // use the same protocol in other steps: update model prop
-      this.updateModel('url', downloadUrl)
+      this.$nextTick(() => {
+        this.updateModel('url', downloadUrl)
+      })
     },
     onFilename (filename) {
       // use the same protocol in other steps: update model prop
-      this.updateModel('image_file_name', filename)
+      this.$nextTick(() => {
+        this.updateModel('image_file_name', filename)
+      })
     },
     onReady (blobImage) {
       this.cameraImage = blobImage
+
+      this.$emit('next')
     }
   },
   mounted () {
