@@ -1,10 +1,9 @@
 // MyUploader.js
 import { QUploaderBase } from 'quasar'
-import { first, last, isFunction, isEmpty } from 'lodash'
+import { first, isFunction, isEmpty } from 'lodash'
 import uuid from 'uuid'
 import storage from 'src/services/firebase/storage'
-
-const getFileExtension = imageType => last(imageType.split('/'))
+import { getFileExtension } from 'src/support/helpers'
 
 export default {
   name: 'FirebaseUploader',

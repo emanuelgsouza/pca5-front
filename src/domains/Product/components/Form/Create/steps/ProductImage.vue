@@ -2,45 +2,97 @@
   <div class="product-image">
     <h6 class="no-margin"> Suba aqui uma imagem para podermos identificar o produto </h6>
 
-    <AppFirebaseUploader
+    <!-- <AppFirebaseUploader
       class="q-mt-xs"
       accept=".jpg, image/*"
       ref="firebaseUploader"
       @filename="onFilename"
       @downloadURL="onDownloadURL"
+    /> -->
+
+    <VueCamera
+      capture="photo"
+      @onReady="onReady"
     />
   </div>
 </template>
 
 <script>
-import { isEmpty } from 'lodash'
+import { isEmpty, isNil } from 'lodash'
 import StepsMixin from '../mixins/steps'
-import AppFirebaseUploader from 'src/components/AppFirebaseUploader'
+// import AppFirebaseUploader from 'src/components/AppFirebaseUploader'
+import VueCamera from 'components/VueCamera.vue'
+import uuid from 'uuid'
+import storage from 'src/services/firebase/storage'
+import uploadImage from 'src/services/firebase/storage/upload-image'
+import { getFileExtension } from 'src/support/helpers'
 
 export default {
   name: 'ProductImage',
   mixins: [ StepsMixin ],
-  components: { AppFirebaseUploader },
+  components: {
+    // AppFirebaseUploader,
+    VueCamera
+  },
   props: {
     imageFilename: String
   },
+  data: () => ({
+    cameraImage: null,
+    isUploadImage: false
+  }),
   computed: {
     hasDownloadUrl () {
       return !isEmpty(this.model.url)
+    },
+    internalCameraImages () {
+      if (this.cameraImage) {
+        const fileExtension = getFileExtension(this.cameraImage.type)
+        const filename = `${uuid.v4()}.${fileExtension}`
+        return {
+          file: this.cameraImage,
+          filename: filename,
+          ref: storage.ref().child(filename),
+          metadata: {
+            contentType: this.cameraImage.type
+          }
+        }
+      }
+
+      return {}
+    },
+    hasCameraImage () {
+      return !isNil(this.cameraImage)
     }
   },
   watch: {
     downloadURL: 'emitDownloadUrl'
   },
   methods: {
+    uploadCameraImage () {
+      if (this.hasCameraImage) {
+        return uploadImage(this.internalCameraImages)
+          .then(downloadURL => {
+            console.log(downloadURL)
+            return Promise.resolve(downloadURL)
+          })
+          .catch(err => Promise.reject(err))
+      }
+
+      this.$q.dialog({
+        message: 'Não há imagem disponível para upload',
+        color: 'negative'
+      })
+    },
     upload () {
       if (this.hasDownloadUrl) {
         return Promise.resolve(this.model.url)
       }
 
-      return this.$refs.firebaseUploader.upload()
-        .then(downloadUrl => Promise.resolve(downloadUrl))
-        .catch(err => Promise.reject(err))
+      // return this.$refs.firebaseUploader.upload()
+      //   .then(downloadUrl => Promise.resolve(downloadUrl))
+      //   .catch(err => Promise.reject(err))
+      return this.uploadCameraImage()
     },
     onDownloadURL (downloadUrl) {
       // use the same protocol in other steps: update model prop
@@ -49,6 +101,9 @@ export default {
     onFilename (filename) {
       // use the same protocol in other steps: update model prop
       this.updateModel('image_file_name', filename)
+    },
+    onReady (blobImage) {
+      this.cameraImage = blobImage
     }
   },
   mounted () {
