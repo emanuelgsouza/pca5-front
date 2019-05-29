@@ -54,6 +54,7 @@ export default {
 </script>
 
 <style>
+
 .index_link {
   text-decoration: none;
 }

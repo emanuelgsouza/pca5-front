@@ -1,19 +1,38 @@
 <template>
-  <QPageSticky position="bottom-right" :offset="[18, 18]" v-if="!isRegisterRoute">
+  <!-- <QPageSticky position="bottom-right" :offset="[18, 18]" v-if="!isRegisterRoute">
     <QBtn
       fab
       icon="add"
       color="negative"
       @click="onClick" />
-  </QPageSticky>
+  </QPageSticky> -->
+
+  <QBtnGroup spread class="toolbar">
+      <QBtn
+      to="/"
+      icon="home"
+      color="black"
+      />
+
+      <QBtn
+      icon="search"
+      color="black"
+      />
+
+      <QBtn
+      icon="add"
+      color="black"
+      @click="onClick"
+      />
+    </QBtnGroup>
 </template>
 
 <script>
-import { QPageSticky, QBtn } from 'quasar'
+import { QBtn, QBtnGroup } from 'quasar'
 
 export default {
   name: 'FloatingButton',
-  components: { QPageSticky, QBtn },
+  components: { QBtn, QBtnGroup },
   computed: {
     isRegisterRoute () {
       return this.$route.name.indexOf('register') !== -1
@@ -30,5 +49,7 @@ export default {
 </script>
 
 <style>
-
+.toolbar {
+  height: 35px;
+}
 </style>

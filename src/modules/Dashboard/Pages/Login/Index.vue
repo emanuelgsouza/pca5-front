@@ -19,7 +19,7 @@
     <QBtn icon='thumb_up'/>
 
     <p>
-      Voce nao tem conta meu truta
+      Voce nao tem conta meu amigo(a)
       <span>
         <router-link :to="{ name: 'dashboard.register.sigup' }">Crie uma conta</router-link>
       </span>

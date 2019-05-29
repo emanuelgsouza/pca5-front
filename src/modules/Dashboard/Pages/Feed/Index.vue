@@ -1,28 +1,23 @@
 <template>
-  <QPage padding>
+  <QPage padding class="body">
     <p> Veja aqui os produtos / serviços que selecionamos para você </p>
 
     <div class="row q-col-gutter-sm">
       <div class="col-12 col-md-4" v-for="(data, key) in feedData" :key="key">
-        <Card :data="data" />
+        <Card class="feed-card" :data="data" />
       </div>
     </div>
 
-    <QPageSticky position="bottom-right" :offset="[18, 18]">
-      <QBtn fab color="primary" icon="add" />
-    </QPageSticky>
   </QPage>
 </template>
 
 <script>
-import { QPageSticky } from 'quasar'
 import { mapState } from 'vuex'
 import Card from './Card'
 
 export default {
   name: 'DashboardPageFeed',
   components: {
-    QPageSticky,
     Card
   },
   computed: {
