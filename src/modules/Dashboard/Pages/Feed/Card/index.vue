@@ -17,14 +17,14 @@
       </div>
         <div class="feed-price">R$ {{ dataValue }}</div>
 
-        <QChip
+        <!-- <QChip
           rounded
           outline
           color="primary"
           text-color="white"
           icon="fab fa-product-hunt">
           {{ dataTypeName }}
-        </QChip>
+        </QChip> -->
 
         <!-- <QBtn
           flat
@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { QCard, QCardSection, QSeparator, QChip, QExpansionItem } from 'quasar'
+import { QCard, QCardSection, QSeparator, QExpansionItem } from 'quasar'
 import { get, isEmpty } from 'lodash'
 import { FEED_TYPES, FEED_TYPES_NAMES } from 'src/domains/Feed/constants'
 
@@ -87,7 +87,7 @@ export default {
   name: 'DashboardCard',
   components: {
     QCard,
-    QChip,
+    // QChip,
     QCardSection,
     QSeparator,
     QExpansionItem
