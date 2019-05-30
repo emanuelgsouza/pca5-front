@@ -10,12 +10,7 @@
             class="text-white index_link"> PCA - Unigranrio </router-link>
         </q-toolbar-title>
 
-        <QBtn
-          flat
-          round
-          icon="fab fa-google"
-          @click="onLogin"
-        />
+        <UserActions />
 
       </q-toolbar>
     </q-header>
@@ -33,7 +28,7 @@
 <script>
 import { QFooter } from 'quasar'
 import FloatingButton from './components/FloatingButton'
-import { loginWithGoogle } from 'src/services/firebase/auth'
+import UserActions from './components/UserActions'
 
 export default {
   name: 'DashboardLayout',
@@ -42,12 +37,7 @@ export default {
       left: false
     }
   },
-  components: { QFooter, FloatingButton },
-  methods: {
-    onLogin () {
-      loginWithGoogle()
-    }
-  }
+  components: { QFooter, FloatingButton, UserActions }
 }
 </script>
 
