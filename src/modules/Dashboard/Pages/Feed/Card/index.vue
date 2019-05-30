@@ -1,29 +1,24 @@
 <template>
   <QCard class="full-width">
     <QCardSection>
-      <div class="text-h6 relative-position text-center">
+      <div class="text-h5 relative-position text-center">
         {{ dataName }}
       </div>
     </QCardSection>
 
-    <QSeparator />
+    <!-- <QSeparator /> -->
 
     <QCardSection class="text-center">
-      <div class="feed-price">
-        R$ {{ dataValue }}
+      <div >
+        <!-- R$ {{ dataValue }} -->
+
+        <img :src="imagePath">
+
       </div>
-    </QCardSection>
+        <div class="feed-price">R$ {{ dataValue }}</div>
 
-    <QSeparator />
-
-    <QCardSection>
-      <div class="q-gutter-xs">
-        <!-- <QChip
-          color="primary"
-          text-color="white"
-          icon="cake"> {{  }} </QChip> -->
         <QChip
-          square
+          rounded
           outline
           color="primary"
           text-color="white"
@@ -31,13 +26,28 @@
           {{ dataTypeName }}
         </QChip>
 
-        <QBtn
+        <!-- <QBtn
           flat
           color="negative"
           :icon="qtnIcon"
           :label="qtnLabel"
           @click="expand"
-        />
+        /> -->
+    </QCardSection>
+
+    <QSeparator />
+
+    <QCardSection class="text-center">
+      <div class="q-gutter-xs">
+        <!-- <QChip
+          color="primary"
+          text-color="white"
+          icon="cake"> {{  }} </QChip> -->
+          <QCardActions align="around">
+        <QBtn class="btn-likeUp" flat round color="primary" icon="far fa-thumbs-up" />
+        <QBtn class="btn-likeDown" flat round color="primary" icon="far fa-thumbs-down" />
+      </QCardActions>
+
       </div>
 
       <template v-if="hasUrl">
@@ -162,5 +172,14 @@ export default {
 </script>
 
 <style>
-
+.feed-card {
+  width: 100%;
+}
+.feed-price {
+  font-size: 25pt;
+  display: inline;
+}
+.btn-likeUp {
+  margin-right: 150px;
+}
 </style>
