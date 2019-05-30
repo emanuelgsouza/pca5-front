@@ -20,21 +20,19 @@
       </q-toolbar>
     </q-header>
 
-    <!-- <q-drawer v-model="left" side="left" bordered>
-      drawer content
-    </q-drawer> -->
+    <QFooter elevated reveal class="full-width">
+      <FloatingButton />
+    </QFooter>
 
     <q-page-container>
       <router-view />
-
-      <FloatingButton />
     </q-page-container>
 
   </q-layout>
 </template>
 <script>
+import { QFooter } from 'quasar'
 import FloatingButton from './components/FloatingButton'
-import { QBtn } from 'quasar'
 import { loginWithGoogle } from 'src/services/firebase/auth'
 
 export default {
@@ -44,7 +42,7 @@ export default {
       left: false
     }
   },
-  components: { FloatingButton, QBtn },
+  components: { QFooter, FloatingButton },
   methods: {
     onLogin () {
       loginWithGoogle()
