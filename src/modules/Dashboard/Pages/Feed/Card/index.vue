@@ -8,14 +8,13 @@
 
     <!-- <QSeparator /> -->
 
-    <QCardSection class="text-center">
-      <div >
-        <!-- R$ {{ dataValue }} -->
-
-        <img :src="imagePath">
-
+    <QCardSection class="no-padding text-center">
+      <div>
+        <figure>
+          <img :src="imagePath">
+        </figure>
       </div>
-        <div class="feed-price">R$ {{ dataValue }}</div>
+      <div class="feed-price">R$ {{ dataValue }}</div>
 
         <!-- <QChip
           rounded
@@ -38,17 +37,13 @@
     <QSeparator />
 
     <QCardSection class="text-center">
-      <div class="q-gutter-xs">
-        <!-- <QChip
-          color="primary"
-          text-color="white"
-          icon="cake"> {{  }} </QChip> -->
-          <QCardActions align="around">
-        <QBtn class="btn-likeUp" flat round color="primary" icon="far fa-thumbs-up" />
-        <QBtn class="btn-likeDown" flat round color="primary" icon="far fa-thumbs-down" />
-      </QCardActions>
+      <!-- <div class="q-gutter-xs">
+        <QCardActions align="around">
+          <QBtn class="btn-likeUp" flat round color="primary" icon="far fa-thumbs-up" />
+          <QBtn class="btn-likeDown" flat round color="primary" icon="far fa-thumbs-down" />
+        </QCardActions>
 
-      </div>
+      </div> -->
 
       <template v-if="hasUrl">
         <br />

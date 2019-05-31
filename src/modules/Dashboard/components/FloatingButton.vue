@@ -5,17 +5,17 @@
         name: 'dashboard'
       }"
       icon="home"
-      color="black"
+      class="text-primary"
     />
 
     <QTab
       icon="search"
-      color="black"
+      class="text-primary"
     />
 
     <QRouteTab
       icon="add"
-      color="black"
+      class="text-primary"
       :to="{
         name: 'dashboard.register'
       }"

@@ -1,13 +1,13 @@
 <template>
   <q-layout>
 
-    <q-header elevated class="bg-primary text-white">
+    <q-header class="bg-white text-primary">
       <q-toolbar>
         <!-- <q-btn dense flat round icon="menu" @click="left = !left" /> -->
         <q-toolbar-title>
           <router-link
             to="/"
-            class="text-white index_link"> PCA - Unigranrio </router-link>
+            class="text-primary index_link"> PCA - Unigranrio </router-link>
         </q-toolbar-title>
 
         <UserActions />
@@ -15,7 +15,7 @@
       </q-toolbar>
     </q-header>
 
-    <QFooter elevated reveal class="full-width">
+    <QFooter reveal class="full-width bg-white">
       <FloatingButton />
     </QFooter>
 

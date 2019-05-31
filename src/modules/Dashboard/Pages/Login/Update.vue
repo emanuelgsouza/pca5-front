@@ -105,12 +105,20 @@ export default {
     finishRegister () {
       updateUser(this.model)
         .then((user) => {
-          this.$q.notify({ color: 'positive', message: 'Deu certo !' })
-          this.setUser(user)
-          this.$router.push('/dashboard/index')
+          this.$q.notify({
+            color: 'positive',
+            icon: 'fas fa-check-circle',
+            message: 'Dados atualizados com sucesso'
+          })
+
+          this.$router.push('/dashboard')
         })
         .catch(() => {
-          this.$q.notify({ color: 'negative', message: 'Deu ruim !' })
+          this.$q.notify({
+            color: 'negative',
+            icon: 'fas fa-exclamation-triangle',
+            message: 'Houve um erro na atualização dos dados'
+          })
         })
     },
     onDateInput (val) {
