@@ -3,7 +3,7 @@
     <!-- <p> Veja aqui os produtos / serviços que selecionamos para você </p> -->
 
     <div class="row q-col-gutter-sm">
-      <div class="col-12 col-md-4" v-for="(data, key) in feedData" :key="key">
+      <div class="col-12 col-md-4" v-for="(data, key) in feedDocs" :key="key">
         <Card class="feed-card" :data="data" />
       </div>
     </div>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Card from './Card'
 
 export default {
@@ -21,10 +21,20 @@ export default {
     Card
   },
   computed: {
-    ...mapState('application', ['feed']),
-    feedData () {
-      return this.feed.data || []
-    }
+    ...mapGetters('application', ['feedDocs'])
+  },
+  methods: {
+    ...mapActions('application', ['loadFeed'])
+  },
+  mounted () {
+    this.$q.loading.show({
+      message: 'Carregando Feed'
+    })
+
+    this.loadFeed()
+      .then(() => {
+        this.$q.loading.hide()
+      })
   }
 }
 </script>

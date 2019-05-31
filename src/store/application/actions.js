@@ -1,9 +1,10 @@
-import { isNil } from 'lodash'
+import { isNil, get } from 'lodash'
 import load from 'src/domains/Geolocalization/support/load-coordinates'
 import getAddress from 'src/domains/Geolocalization/support/load-address'
 import getCategories from 'src/domains/Categories/support/load-categories'
 import * as TYPES from './mutation-types'
-import { feedDataMock } from 'src/domains/Feed/mock'
+// import { feedDataMock } from 'src/domains/Feed/mock'
+import $http from 'src/services/http'
 
 export function loadCoordinates ({ commit }) {
   return load()
@@ -48,9 +49,10 @@ export function loadFeed ({ commit }, payload) {
   commit(TYPES.SET_FEED_LOADING, true)
   // TODO: pensar em quando der merda na execução do código, mostrar um erro para o usuário relacionado ao feed
 
-  return Promise.resolve(feedDataMock)
-    .then(feedData => {
-      console.log({ feedData })
+  return $http
+    .get('/api/search/all')
+    .then(result => {
+      const feedData = get(result, 'data', {})
       commit(TYPES.SET_FEED, feedData)
       commit(TYPES.SET_FEED_LOADING, false)
       return Promise.resolve(feedData)

@@ -8,7 +8,5 @@ export default {
     errorCode: null,
     errorMessage: null
   },
-  feed: {
-    data: []
-  }
+  feed: {}
 }

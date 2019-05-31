@@ -10,8 +10,8 @@ const initializeApp = async store => {
   // const value = await getWasLogin()
   // store.commit(`auth/${TYPES.SET_WAS_LOGIN}`, value)
 
-  console.log('Load Feed')
-  await store.dispatch('application/loadFeed', {})
+  // console.log('Load Feed')
+  // await store.dispatch('application/loadFeed', {})
 
   const user = await onAuthStateChanged()
 

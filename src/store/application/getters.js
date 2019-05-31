@@ -7,3 +7,7 @@ export function hasCoordinateError (state) {
 export function getDataFromFeed (state) {
   return get(state, 'feed.data', [])
 }
+
+export function feedDocs (state) {
+  return get(state, 'feed.docs', [])
+}
