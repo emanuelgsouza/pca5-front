@@ -13,21 +13,21 @@
       class="text-primary"
     />
 
-    <QRouteTab
+    <QTab
       icon="add"
       class="text-primary"
-      :to="{
-        name: 'dashboard.register'
-      }"
+      @click="goToRegisterProduct"
     />
   </QTabs>
 </template>
 
 <script>
+import injectUserMixin from 'src/domains/User/mixins/inject-user'
 import { QRouteTab, QTab, QTabs } from 'quasar'
 
 export default {
   name: 'FloatingButton',
+  mixins: [ injectUserMixin ],
   components: { QRouteTab, QTab, QTabs },
   computed: {
     isRegisterRoute () {
@@ -35,9 +35,18 @@ export default {
     }
   },
   methods: {
-    onClick () {
-      this.$router.push({
-        name: 'dashboard.register'
+    goToRegisterProduct () {
+      if (this.hasUser) {
+        this.$router.push({
+          name: 'dashboard.register'
+        })
+        return
+      }
+
+      this.$q.notify({
+        color: 'negative',
+        icon: 'far fa-frown',
+        message: 'É necessário estar logado para executar essa ação'
       })
     }
   }
