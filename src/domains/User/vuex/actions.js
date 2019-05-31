@@ -1,5 +1,6 @@
 import { get } from 'lodash'
 import http from 'src/services/http'
+import { logout } from 'src/services/firebase/auth'
 import { setToken } from 'src/services/http/client'
 import * as TYPES from './mutation-types'
 import factoryUser from 'src/domains/User/support/factory-user'
@@ -37,5 +38,13 @@ export const loadUserInformation = ({ commit, state }) => {
       // commit(TYPES.SET_ERROR, err.message)
 
       return Promise.reject(err.message)
+    })
+}
+
+export const logoutUser = ({ commit }) => {
+  return logout()
+    .then(() => {
+      commit(TYPES.CLEAR_USER)
+      return Promise.resolve()
     })
 }

@@ -8,18 +8,28 @@
       </div>
     </div>
 
+    <QInnerLoading :showing="visible">
+      <QSpinnerFacebook size="50px" color="primary" />
+    </QInnerLoading>
+
   </QPage>
 </template>
 
 <script>
+import { QInnerLoading, QSpinnerFacebook } from 'quasar'
 import { mapGetters, mapActions } from 'vuex'
 import Card from './Card'
 
 export default {
   name: 'DashboardPageFeed',
   components: {
-    Card
+    Card,
+    QInnerLoading,
+    QSpinnerFacebook
   },
+  data: () => ({
+    visible: false
+  }),
   computed: {
     ...mapGetters('application', ['feedDocs'])
   },
@@ -27,13 +37,11 @@ export default {
     ...mapActions('application', ['loadFeed'])
   },
   mounted () {
-    this.$q.loading.show({
-      message: 'Carregando Feed'
-    })
+    this.visible = true
 
     this.loadFeed()
       .then(() => {
-        this.$q.loading.hide()
+        this.visible = false
       })
   }
 }
