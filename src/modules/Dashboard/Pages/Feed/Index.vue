@@ -3,7 +3,7 @@
     <!-- <p> Veja aqui os produtos / serviços que selecionamos para você </p> -->
 
     <div class="row q-col-gutter-sm">
-      <div class="col-12 col-md-4" v-for="(data, key) in feedDocs" :key="key">
+      <div class="col-12 col-md-4" v-for="(data, key) in feed" :key="key">
         <Card class="feed-card" :data="data" />
       </div>
     </div>
@@ -17,7 +17,7 @@
 
 <script>
 import { QInnerLoading, QSpinnerFacebook } from 'quasar'
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import Card from './Card'
 
 export default {
@@ -31,7 +31,7 @@ export default {
     visible: false
   }),
   computed: {
-    ...mapGetters('application', ['feedDocs'])
+    ...mapState('application', ['feed'])
   },
   methods: {
     ...mapActions('application', ['loadFeed'])

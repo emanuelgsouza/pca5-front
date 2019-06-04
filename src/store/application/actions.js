@@ -6,6 +6,14 @@ import * as TYPES from './mutation-types'
 // import { feedDataMock } from 'src/domains/Feed/mock'
 import $http from 'src/services/http'
 
+const buildLoadFeedURL = type => {
+  if (type) {
+    return `/api/search/all?type=${type}`
+  }
+
+  return '/api/search/all?type=all'
+}
+
 export function loadCoordinates ({ commit }) {
   return load()
     .then(coordinates => {
@@ -44,15 +52,15 @@ export function loadAddress ({ state }) {
   return getAddress(lat, lon)
 }
 
-export function loadFeed ({ commit }, payload) {
+export function loadFeed ({ commit }, type = 'all') {
   // const filter = payload.filter || {}
   commit(TYPES.SET_FEED_LOADING, true)
   // TODO: pensar em quando der merda na execução do código, mostrar um erro para o usuário relacionado ao feed
 
   return $http
-    .get('/api/search/all')
+    .get(buildLoadFeedURL(type))
     .then(result => {
-      const feedData = get(result, 'data', {})
+      const feedData = get(result, 'data', [])
       commit(TYPES.SET_FEED, feedData)
       commit(TYPES.SET_FEED_LOADING, false)
       return Promise.resolve(feedData)

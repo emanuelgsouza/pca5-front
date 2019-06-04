@@ -8,6 +8,6 @@ export function getDataFromFeed (state) {
   return get(state, 'feed.data', [])
 }
 
-export function feedDocs (state) {
-  return get(state, 'feed.docs', [])
-}
+// export function feedDocs (state) {
+//   return get(state, 'feed.docs', [])
+// }
