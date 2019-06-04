@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="q-pa-xs">
     <!-- <p class="text-h6"> Cadastre aqui o produto </p> -->
     <CreateProductForm ref="form" @data="onData" />
   </div>

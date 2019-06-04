@@ -4,6 +4,7 @@
       square
       icon="info"
       color="info"
+      class="full-width"
     >
       {{ message }}
     </QChip>
