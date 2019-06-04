@@ -8,6 +8,8 @@ export const SET_ERROR = 'setError'
 
 export const SET_FEED = 'setFeed'
 
+export const RESET_FEED = 'resetFeed'
+
 export const SET_FEED_LOADING = 'setFeedLoading'
 
 export const SET_STOP_FEED_LOADING = 'setStopFeedLoading'

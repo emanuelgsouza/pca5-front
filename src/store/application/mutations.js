@@ -32,6 +32,10 @@ export default {
   [ TYPES.SET_FEED ] (state, feed) {
     state.feed = [ ...state.feed, ...feed ]
   },
+  [ TYPES.RESET_FEED ] (state, feed) {
+    state.feed = [ ...feed ]
+    state.stopFeed = false
+  },
   [ TYPES.SET_FEED_LOADING ] (state, loading) {
     state.feedLoading = loading
   },

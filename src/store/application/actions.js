@@ -68,4 +68,25 @@ export function loadFeed ({ commit }, payload = {}) {
       }
       return Promise.resolve(feedData)
     })
+    .catch(err => {
+      return Promise.reject(err)
+    })
+}
+
+export function resetFeed ({ commit }) {
+  // const filter = payload.filter || {}
+  commit(TYPES.SET_FEED_LOADING, true)
+  // TODO: pensar em quando der merda na execução do código, mostrar um erro para o usuário relacionado ao feed
+
+  return $http
+    .get(buildLoadFeedURL({}))
+    .then(result => {
+      const feedData = get(result, 'data', [])
+      commit(TYPES.RESET_FEED, feedData)
+      commit(TYPES.SET_FEED_LOADING, false)
+      return Promise.resolve(feedData)
+    })
+    .catch(err => {
+      return Promise.reject(err)
+    })
 }
