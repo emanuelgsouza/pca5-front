@@ -1,4 +1,3 @@
-// Service
 export const DEFAULT_SERVICE_DATA = {
   name: null,
   category: null,

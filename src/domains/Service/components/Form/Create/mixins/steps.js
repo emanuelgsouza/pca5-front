@@ -35,7 +35,7 @@ export default {
               return Promise.resolve(success)
             }
 
-            return Promise.reject(new Error('Deu ruim no form ...'))
+            return Promise.reject(new Error('Existem erros no form ...'))
           })
       }
     }

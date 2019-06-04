@@ -12,7 +12,7 @@
 
       <QStep
         :name="1"
-        title="Nos dê algumas informações sobre ele"
+        title="Nos dê algumas informações sobre o serviço !"
         icon="info"
         :error="!hasErrors.generalInfo"
         :done="step > 1"
@@ -98,9 +98,6 @@ export default {
     }
   }),
   computed: {
-    // isOnlineService () {
-    //   return this.model.is_online
-    // },
     finishedSteps () {
       return this.step === 3
     }

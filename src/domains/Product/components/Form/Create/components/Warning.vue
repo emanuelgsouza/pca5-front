@@ -2,8 +2,9 @@
   <div class="product-warning">
     <QChip
       square
+      color="orange"
+      text-color="black"
       icon="info"
-      color="info"
       class="full-width"
     >
       {{ message }}

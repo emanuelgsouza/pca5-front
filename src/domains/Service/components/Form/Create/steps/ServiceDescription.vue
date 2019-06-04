@@ -22,22 +22,9 @@ export default {
   name: 'ServiceDescription',
   mixins: [ StepMixin ],
   data () {
-  // el: '#q-app',
     return {
       text: ''
     }
   }
-  // data: () => ({
-  //   options: [
-  //     {
-  //       label: 'Loja física',
-  //       value: false
-  //     },
-  //     {
-  //       label: 'Loja online',
-  //       value: true
-  //     }
-  //   ]
-  // })
 }
 </script>
