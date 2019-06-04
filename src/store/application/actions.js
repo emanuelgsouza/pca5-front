@@ -1,4 +1,4 @@
-import { isNil, get } from 'lodash'
+import { isNil, get, isEmpty } from 'lodash'
 import load from 'src/domains/Geolocalization/support/load-coordinates'
 import getAddress from 'src/domains/Geolocalization/support/load-address'
 import getCategories from 'src/domains/Categories/support/load-categories'
@@ -6,12 +6,11 @@ import * as TYPES from './mutation-types'
 // import { feedDataMock } from 'src/domains/Feed/mock'
 import $http from 'src/services/http'
 
-const buildLoadFeedURL = type => {
-  if (type) {
-    return `/api/search/all?type=${type}`
-  }
+const buildLoadFeedURL = payload => {
+  const type = payload.type || 'all'
+  const page = payload.page || 1
 
-  return '/api/search/all?type=all'
+  return `/api/search/all?type=${type}&page=${page}`
 }
 
 export function loadCoordinates ({ commit }) {
@@ -52,17 +51,21 @@ export function loadAddress ({ state }) {
   return getAddress(lat, lon)
 }
 
-export function loadFeed ({ commit }, type = 'all') {
+export function loadFeed ({ commit }, payload = {}) {
   // const filter = payload.filter || {}
   commit(TYPES.SET_FEED_LOADING, true)
   // TODO: pensar em quando der merda na execução do código, mostrar um erro para o usuário relacionado ao feed
 
   return $http
-    .get(buildLoadFeedURL(type))
+    .get(buildLoadFeedURL(payload))
     .then(result => {
       const feedData = get(result, 'data', [])
       commit(TYPES.SET_FEED, feedData)
       commit(TYPES.SET_FEED_LOADING, false)
+
+      if (isEmpty(feedData)) {
+        commit(TYPES.SET_STOP_FEED_LOADING)
+      }
       return Promise.resolve(feedData)
     })
 }

@@ -8,5 +8,6 @@ export default {
     errorCode: null,
     errorMessage: null
   },
-  feed: {}
+  feed: [],
+  stopFeed: false
 }

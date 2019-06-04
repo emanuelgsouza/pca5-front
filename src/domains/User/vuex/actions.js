@@ -16,7 +16,7 @@ export const login = ({ commit, dispatch }, userObject) => {
       return dispatch('loadUserInformation')
     })
     .catch(err => {
-      commit(TYPES.SET_ERROR, err.message)
+      // commit(TYPES.SET_ERROR, err.message)
       commit(TYPES.CLEAR_USER_LOADING)
 
       return Promise.reject(err.message)
