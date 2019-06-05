@@ -26,7 +26,7 @@
   <QDialog v-model="prompt">
       <QCard style="min-width: 400px" class="q-px-sm q-pb-md">
         <QCardSection>
-          <div class="text-h6 text-center">Faça um pesquisa !</div>
+          <div class="text-h5 text-center">Faça uma pesquisa !</div>
         </QCardSection>
 
         <QCardSection>
@@ -89,7 +89,7 @@
           flat
           icon="search"
           label="Pesquisar"
-          @click="modalSearch"
+          @click="onSearch"
           />
 
           <QBtn
@@ -110,6 +110,7 @@
 <script>
 import injectUserMixin from 'src/domains/User/mixins/inject-user'
 import { QRouteTab, QTab, QTabs, QDialog, QCard, QInput, QBtn, QSlider, QSelect } from 'quasar'
+// import { mapActions } from 'vuex'
 
 export default {
   name: 'FloatingButton',
@@ -130,10 +131,33 @@ export default {
     }
   },
   methods: {
-    modalSearch () {
+    // ...mapActions('aplication'),
+
+    onSearch () {
       alert(`Objeto a ser enviado ( Distancia:
         ${this.value} , ${this.search} , ${this.optionsSearch} `)
+
+      // return this.validateGetSearch()
+      //   .then(() => {
+      //     this.save = true
+      //     this.$emit('model', { ...this.model })
+      //   })
+      //   .catch(err => {
+      //     console.error('Erro na requisicao', err.message)
+      //   })
     },
+
+    // validateGetSearch () {
+    //   return new Promise((resolve, reject) => {
+    //     const value = Object.values(this.hasErrors).every()
+    //
+    //     if (value) {
+    //       return resolve(value)
+    //     }
+
+    //     return reject(new Error('Algo de errado nao esta certo na busca...'))
+    //   })
+    // },
 
     goToRegisterProduct () {
       if (this.hasUser) {
