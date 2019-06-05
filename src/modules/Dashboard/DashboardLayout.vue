@@ -3,11 +3,12 @@
 
     <q-header class="bg-white text-primary">
       <q-toolbar>
-        <!-- <q-btn dense flat round icon="menu" @click="left = !left" /> -->
+        <q-avatar>
+          <!-- Coloque a logo aqui -->
+          <img src="statics/quasar-logo.png" alt="">
+        </q-avatar>
         <q-toolbar-title>
-          <router-link
-            to="/"
-            class="text-primary index_link"> PCA - Unigranrio </router-link>
+          Alot
         </q-toolbar-title>
 
         <UserActions />
@@ -26,7 +27,7 @@
   </q-layout>
 </template>
 <script>
-import { QFooter } from 'quasar'
+import { QAvatar, QFooter } from 'quasar'
 import FloatingButton from './components/FloatingButton'
 import UserActions from './components/UserActions'
 
@@ -37,7 +38,7 @@ export default {
       left: false
     }
   },
-  components: { QFooter, FloatingButton, UserActions }
+  components: { QAvatar, QFooter, FloatingButton, UserActions }
 }
 </script>
 
