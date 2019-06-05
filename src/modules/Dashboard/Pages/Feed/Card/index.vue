@@ -1,12 +1,10 @@
 <template>
   <QCard class="full-width">
-    <QCardSection>
+    <QCardSection :class="`bg-${cardColor}`">
       <div class="text-h5 relative-position text-center">
         {{ dataName }}
       </div>
     </QCardSection>
-
-    <!-- <QSeparator /> -->
 
     <QCardSection class="no-padding text-center">
       <div>
@@ -14,78 +12,77 @@
           <img :src="imagePath">
         </figure>
       </div>
-
-      <div class="feed-price">R$ {{ dataValue }}</div>
-
-        <!-- <QChip
-          rounded
-          outline
-          color="primary"
-          text-color="white"
-          icon="fab fa-product-hunt">
-          {{ dataTypeName }}
-        </QChip> -->
-
-        <QBtn
-          flat
-          class="btn-info"
-          color="primary"
-          icon="fas fa-info"
-          @click="expand"
-        />
     </QCardSection>
 
-    <QSeparator />
+    <QCardSection class="card-footer">
+      <div class="row justify-between items-center">
+        <div>
+          <!-- TODO: Implementar filtro para preço -->
+          <p class="text-body1 feed-price"> R$ {{ dataValue }} </p>
+        </div>
+        <div>
+          <QBtn
+            round
+            flat
+            class="btn-info"
+            color="primary"
+            icon="fas fa-info-circle"
+            @click="expand"
+          />
+        </div>
+      </div>
 
-    <QCardSection class="text-center">
-      <!-- <div class="q-gutter-xs">
-        <QCardActions align="around">
-          <QBtn class="btn-likeUp" flat round color="primary" icon="far fa-thumbs-up" />
-          <QBtn class="btn-likeDown" flat round color="primary" icon="far fa-thumbs-down" />
-        </QCardActions>
-
-      </div> -->
-
-      <template v-if="hasUrl">
-        <br />
+      <template v-if="isOnlineProduct">
         <QExpansionItem v-model="expanded">
+          <div class="text-center q-my-md">
+            <QIcon
+              size="24px"
+              name="fas fa-external-link-alt"
+              :color="cardColor"
+            />
+          </div>
 
-          <QItemSection avatar>
-            <QIcon name="fas fa-external-link-alt" />
-          </QItemSection>
-
-          <a
-          :href="url"
-          target="blanck">
-          {{ dataName }}
-          </a>
+          <div class="text-left">
+            <p> <a :href="url" target="blanck"> Confira o produto </a> </p>
+          </div>
 
         </QExpansionItem>
       </template>
 
-      <template v-if="hasDescription">
-        <br />
+      <template v-if="isService">
         <QExpansionItem v-model="expanded">
-          <div class="text-center">
-            Categoria do serviço: {{ data }} <br />
+          <div class="text-center q-my-md">
+            <QIcon
+              size="24px"
+              name="fas fa-map-marker-alt"
+              :color="cardColor"
+            />
+          </div>
+          <div class="text-left">
+            Categoria: {{ data.categoria }} <br />
             Rua: {{ data.adress.rua }} <br />
             Numero: {{ data.adress.numero }} <br />
             Bairro: {{ data.adress.bairro }} <br />
             Cidade: {{ data.adress.cidade }} <br />
             Estado: {{ data.adress.estado }} <br />
-
-            Uma pequena descrição do serviço: {{ dataDescription }}
-
           </div>
+
+          <p class="text-italic"> {{ dataDescription }} </p>
           <!-- {{ dataDescription }} -->
         </QExpansionItem>
       </template>
 
-      <template v-if="hasImagePath">
-        <br />
+      <template v-if="isFisicoProduct">
         <QExpansionItem v-model="expanded">
+          <div class="text-center q-my-md">
+            <QIcon
+              size="24px"
+              name="fas fa-map-marker-alt"
+              :color="cardColor"
+            />
+          </div>
           <div class="text-left">
-            Categoria do produto: {{ data.categoria }} <br />
+            Categoria: {{ data.categoria }} <br />
             Rua: {{ data.adress.rua }} <br />
             Numero: {{ data.adress.numero }} <br />
              Bairro: {{ data.adress.bairro }} <br />
@@ -103,7 +100,12 @@
 </template>
 
 <script>
-import { QCard, QCardSection, QSeparator, QExpansionItem } from 'quasar'
+import {
+  QCard,
+  // QSeparator,
+  QCardSection,
+  QExpansionItem
+} from 'quasar'
 import { get, isEmpty } from 'lodash'
 import { FEED_TYPES, FEED_TYPES_NAMES } from 'src/domains/Feed/constants'
 
@@ -111,9 +113,8 @@ export default {
   name: 'DashboardCard',
   components: {
     QCard,
-    // QChip,
+    // QSeparator,
     QCardSection,
-    QSeparator,
     QExpansionItem
   },
   props: {
@@ -163,6 +164,13 @@ export default {
     },
     dataValue () {
       return get(this.data, 'valorProduto', 0)
+    },
+    cardColor () {
+      if (this.isOnlineProduct) {
+        return 'primary'
+      }
+
+      return this.isFisicoProduct ? 'secondary' : 'info'
     }
     // qtnLabel () {
     //   if (this.isOnlineProduct) {
@@ -200,11 +208,14 @@ export default {
   width: 100%;
 }
 .feed-price {
-  font-size: 25pt;
   display: inline;
 }
 /* Gambi das brabas */
 .btn-info {
   left: 25%;
+}
+
+.card-footer {
+  padding-top: 16px !important;
 }
 </style>
