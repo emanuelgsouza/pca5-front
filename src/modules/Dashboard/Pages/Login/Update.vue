@@ -1,7 +1,7 @@
 <template>
   <QPage padding>
     <div class="sign-up q-gutter-md">
-      <h6> Termine de efetuar seu cadastro </h6>
+      <h6 class="text-center"> Termine de efetuar seu cadastro </h6>
         <QForm @submit="finishRegister" class="q-gutter-xs">
           <QInput
             filled
