@@ -44,6 +44,21 @@ export default {
   },
   mounted () {
     this.updateLoadingStatus(this.isUserLoading)
+  },
+  created () {
+    document.addEventListener('sw:update', () => {
+      const reload = () => document.location.reload(true)
+      this.$q.dialog({
+        title: 'Update',
+        message: 'Uma versão mais atualizada já está disponível, clique em Ok para atualizar',
+        position: 'top',
+        cancel: true
+      })
+        .onOk(reload)
+        .onCancel(_ => {
+          console.log('Evento cancelado. Atualização sairá no próximo refresh de página')
+        })
+    })
   }
 }
 </script>

@@ -29,6 +29,10 @@ register(process.env.SERVICE_WORKER_FILE, {
 
   updated (registration) {
     console.log('New content is available; please refresh.')
+
+    setTimeout(function () {
+      document.dispatchEvent(new Event('sw:update'))
+    }, 3000)
   },
 
   offline () {
