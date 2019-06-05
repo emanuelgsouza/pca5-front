@@ -24,52 +24,72 @@
   </QTabs>
 
   <QDialog v-model="prompt">
-      <QCard style="min-width: 400px">
+      <QCard style="min-width: 400px" class="q-px-sm q-pb-md">
         <QCardSection>
           <div class="text-h6 text-center">Faça um pesquisa !</div>
         </QCardSection>
 
         <QCardSection>
+          <QItem>
+          <QItemSection avatar>
+            <QIcon name="fas fa-search" />
+          </QItemSection>
+
           <QInput
-          label="O que deseja encontrar ?"
-          placeholder="Smartphone..."
+          class="teste"
           dense
-          v-model="search"
           autofocus
+          label="O que deseja encontrar ?"
+          debounce="1000"
+          v-model="search"
           @keyup.enter="prompt = false"
           >
-            <template v-slot:prepend>
-              <QIcon name="search" />
-            </template>
           </QInput>
+        </QItem>
 
-          <br />
-          <br />
+        <QItem >
+          <QItemSection avatar>
+            <QIcon name="fas fa-question" />
+          </QItemSection>
+          <QSelect
+            class="teste"
+            v-model="optionsSearch"
+            :options="optionsToSearch"
+            label="Tipo de busca"
+          />
+        </QItem>
 
-          <QSlider
-          v-model="value"
-          :min="500"
-          :max="20000"
-          :step="500"
-          label
-          :label-value="value + ' Metros'"
-          label-always
-          color="red"
-          >
-            <template v-slot:prepend>
-              <QIcon name="place" />
-            </template>
-          </QSlider>
+        <br />
+
+        <QItem >
+          <QItemSection avatar>
+            <QIcon name="place" />
+          </QItemSection>
+          <QItemSection>
+            <QSlider
+            class="slider"
+             v-model="value"
+             :min="500"
+             :max="20000"
+             :step="500"
+             label
+             :label-value="value + ' Metros'"
+             label-always
+             color="primary"
+            />
+          </QItemSection>
+        </QItem>
 
         </QCardSection>
 
-        <QCardActions align="right" class="text-primary">
+        <QCardActions class="q-pa-sm">
           <QBtn
-          icon="search"
-          color="teal"
+          class="q-ml-sm"
+          color="primary"
           flat
+          icon="search"
           label="Pesquisar"
-          v-close-popup
+          @click="modalSearch"
           />
 
           <QBtn
@@ -89,12 +109,12 @@
 
 <script>
 import injectUserMixin from 'src/domains/User/mixins/inject-user'
-import { QRouteTab, QTab, QTabs, QDialog, QCard, QInput, QBtn, QSlider } from 'quasar'
+import { QRouteTab, QTab, QTabs, QDialog, QCard, QInput, QBtn, QSlider, QSelect } from 'quasar'
 
 export default {
   name: 'FloatingButton',
   mixins: [ injectUserMixin ],
-  components: { QRouteTab, QTab, QTabs, QDialog, QCard, QInput, QBtn, QSlider },
+  components: { QRouteTab, QTab, QTabs, QDialog, QCard, QInput, QBtn, QSlider, QSelect },
   computed: {
     isRegisterRoute () {
       return this.$route.name.indexOf('register') !== -1
@@ -103,12 +123,17 @@ export default {
   data () {
     return {
       prompt: false,
-      value: 0,
-      search: ''
+      value: 500,
+      search: '',
+      optionsSearch: null,
+      optionsToSearch: ['Produto Fisico', 'Produto on-line', 'Servico']
     }
-    // alert('Pombo da esperaca')
   },
   methods: {
+    modalSearch () {
+      alert(`Objeto a ser enviado ( Distancia:
+        ${this.value} , ${this.search} , ${this.optionsSearch} `)
+    },
 
     goToRegisterProduct () {
       if (this.hasUser) {
@@ -129,4 +154,7 @@ export default {
 </script>
 
 <style>
+.teste {
+  width: 100%;
+}
 </style>
