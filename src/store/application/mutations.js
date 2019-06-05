@@ -1,4 +1,5 @@
 import * as TYPES from './mutation-types'
+import { getFilter } from 'src/domains/Feed/support'
 
 export default {
   [ TYPES.SET_COORDINATES ] (state, coordinates) {
@@ -34,6 +35,8 @@ export default {
   },
   [ TYPES.RESET_FEED ] (state, feed) {
     state.feed = [ ...feed ]
+  },
+  [ TYPES.STOP_FEED ] (state) {
     state.stopFeed = false
   },
   [ TYPES.SET_FEED_LOADING ] (state, loading) {
@@ -41,5 +44,8 @@ export default {
   },
   [ TYPES.SET_STOP_FEED_LOADING ] (state) {
     state.stopFeed = true
+  },
+  [ TYPES.SET_FILTER ] (state, filterObject) {
+    state.filter = getFilter(filterObject)
   }
 }

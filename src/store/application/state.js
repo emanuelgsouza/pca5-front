@@ -9,5 +9,10 @@ export default {
     errorMessage: null
   },
   feed: [],
-  stopFeed: false
+  feedLoading: false,
+  stopFeed: false,
+  filter: {
+    type: 'all',
+    metters: 3
+  }
 }

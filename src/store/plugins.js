@@ -27,4 +27,14 @@ const initializeApp = async store => {
 
   store.dispatch('auth/login', user)
 }
-export default [ initializeApp ]
+
+const subscribeChanges = store => {
+  // store.subscribe((mutation, state) => {})
+  store.subscribe(({ type }) => {
+    if (type === 'application/setFilter') {
+      store.dispatch('application/loadFeedFromFilter')
+    }
+  })
+}
+
+export default [ initializeApp, subscribeChanges ]

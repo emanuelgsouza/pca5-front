@@ -25,7 +25,7 @@
       </QInfiniteScroll>
     </QPullToRefresh>
 
-    <QInnerLoading :showing="visible">
+    <QInnerLoading :showing="feedLoading">
       <QSpinnerFacebook size="50px" color="primary" />
     </QInnerLoading>
 
@@ -62,11 +62,8 @@ export default {
     QInfiniteScroll,
     QSpinnerFacebook
   },
-  data: () => ({
-    visible: false
-  }),
   computed: {
-    ...mapState('application', ['feed', 'stopFeed'])
+    ...mapState('application', ['feed', 'stopFeed', 'feedLoading'])
   },
   watch: {
     stopFeed: 'processStopFeed'
@@ -93,7 +90,6 @@ export default {
     },
     processError () {
       this.$refs.infiniteScroll.stop()
-      this.visible = false
       this.$q.notify({
         color: 'negative',
         duration: 500,
@@ -101,24 +97,20 @@ export default {
       })
     },
     loadData (done) {
-      this.visible = true
       this.loadFeed()
         .then(() => {
           if (isFunction(done)) {
             done()
           }
-          this.visible = false
         })
         .catch(this.processError)
     },
     resetLoadData (done) {
-      this.visible = true
       this.resetFeed()
         .then(() => {
           if (isFunction(done)) {
             done()
           }
-          this.visible = false
         })
         .catch(this.processError)
     }

@@ -13,7 +13,7 @@
     <QTab
       icon="search"
       class="text-primary"
-      @click="prompt = true"
+      @click="openSearch"
     />
 
     <QTab
@@ -22,100 +22,19 @@
       @click="goToRegisterProduct"
     />
   </QTabs>
-
-  <QDialog v-model="prompt">
-      <QCard style="min-width: 400px" class="q-px-sm q-pb-md">
-        <QCardSection>
-          <div class="text-h5 text-center">Faça uma pesquisa !</div>
-        </QCardSection>
-
-        <QCardSection>
-          <QItem>
-          <QItemSection avatar>
-            <QIcon name="fas fa-search" />
-          </QItemSection>
-
-          <QInput
-          class="teste"
-          dense
-          autofocus
-          label="O que deseja encontrar ?"
-          debounce="1000"
-          v-model="search"
-          @keyup.enter="prompt = false"
-          >
-          </QInput>
-        </QItem>
-
-        <QItem >
-          <QItemSection avatar>
-            <QIcon name="fas fa-question" />
-          </QItemSection>
-          <QSelect
-            class="teste"
-            v-model="optionsSearch"
-            :options="optionsToSearch"
-            label="Tipo de busca"
-          />
-        </QItem>
-
-        <br />
-
-        <QItem >
-          <QItemSection avatar>
-            <QIcon name="place" />
-          </QItemSection>
-          <QItemSection>
-            <QSlider
-            class="slider"
-             v-model="value"
-             :min="500"
-             :max="20000"
-             :step="500"
-             label
-             :label-value="value + ' Metros'"
-             label-always
-             color="primary"
-            />
-          </QItemSection>
-        </QItem>
-
-        </QCardSection>
-
-        <QCardActions class="q-pa-sm">
-          <QBtn
-          class="q-ml-sm"
-          color="primary"
-          flat
-          icon="search"
-          label="Pesquisar"
-          @click="onSearch"
-          />
-
-          <QBtn
-          icon="cancel"
-          color="negative"
-          flat
-          label="Cancelar"
-          v-close-popup
-          />
-        </QCardActions>
-      </QCard>
-
-  </QDialog>
-
+  <SearchModal ref="searchModal" />
   </div>
 </template>
 
 <script>
 import injectUserMixin from 'src/domains/User/mixins/inject-user'
-import { QRouteTab, QTab, QTabs, QDialog, QCard, QInput, QBtn, QSlider, QSelect } from 'quasar'
-// import { mapActions } from 'vuex'
+import { QRouteTab, QTab, QTabs } from 'quasar'
+import SearchModal from './Search'
 
 export default {
   name: 'FloatingButton',
   mixins: [ injectUserMixin ],
-  components: { QRouteTab, QTab, QTabs, QDialog, QCard, QInput, QBtn, QSlider, QSelect },
+  components: { QRouteTab, QTab, QTabs, SearchModal },
   computed: {
     isRegisterRoute () {
       return this.$route.name.indexOf('register') !== -1
@@ -131,20 +50,8 @@ export default {
     }
   },
   methods: {
-    // ...mapActions('aplication'),
-
-    onSearch () {
-      alert(`Objeto a ser enviado ( Distancia:
-        ${this.value} , ${this.search} , ${this.optionsSearch} `)
-
-      // return this.validateGetSearch()
-      //   .then(() => {
-      //     this.save = true
-      //     this.$emit('model', { ...this.model })
-      //   })
-      //   .catch(err => {
-      //     console.error('Erro na requisicao', err.message)
-      //   })
+    openSearch () {
+      this.$refs.searchModal.open()
     },
 
     // validateGetSearch () {
