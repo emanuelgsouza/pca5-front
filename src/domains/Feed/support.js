@@ -10,7 +10,7 @@ export const getFilter = (filterObject = {}) => {
   }
 }
 
-export const buildLoadFeedURL = payload => {
+export const buildLoadFeedURL = (payload = {}) => {
   const type = payload.type || 'all'
   const page = payload.page || 1
 
