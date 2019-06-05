@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import {QCard, QCardSection, QSeparator} from 'quasar'
-import {get} from 'lodash'
+import { QCard, QCardSection, QSeparator } from 'quasar'
+import { get } from 'lodash'
 
 export default {
   name: 'DashboardCard',

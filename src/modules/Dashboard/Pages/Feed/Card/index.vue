@@ -14,6 +14,7 @@
           <img :src="imagePath">
         </figure>
       </div>
+
       <div class="feed-price">R$ {{ dataValue }}</div>
 
         <!-- <QChip
@@ -25,13 +26,13 @@
           {{ dataTypeName }}
         </QChip> -->
 
-        <!-- <QBtn
+        <QBtn
           flat
-          color="negative"
-          :icon="qtnIcon"
-          :label="qtnLabel"
+          class="btn-info"
+          color="primary"
+          icon="fas fa-info"
           @click="expand"
-        /> -->
+        />
     </QCardSection>
 
     <QSeparator />
@@ -48,24 +49,52 @@
       <template v-if="hasUrl">
         <br />
         <QExpansionItem v-model="expanded">
-          <a :href="url" target="blanck"> Link do produto </a>
+
+          <QItemSection avatar>
+            <QIcon name="fas fa-external-link-alt" />
+          </QItemSection>
+
+          <a
+          :href="url"
+          target="blanck">
+          {{ dataName }}
+          </a>
+
         </QExpansionItem>
       </template>
 
       <template v-if="hasDescription">
         <br />
         <QExpansionItem v-model="expanded">
-          {{ dataDescription }}
+          <div class="text-center">
+            Categoria do serviço: {{ data }} <br />
+            Rua: {{ data.adress.rua }} <br />
+            Numero: {{ data.adress.numero }} <br />
+            Bairro: {{ data.adress.bairro }} <br />
+            Cidade: {{ data.adress.cidade }} <br />
+            Estado: {{ data.adress.estado }} <br />
+
+            Uma pequena descrição do serviço: {{ dataDescription }}
+
+          </div>
+          <!-- {{ dataDescription }} -->
         </QExpansionItem>
       </template>
 
       <template v-if="hasImagePath">
         <br />
         <QExpansionItem v-model="expanded">
-          <div class="text-center">
-            <figure>
+          <div class="text-left">
+            Categoria do produto: {{ data.categoria }} <br />
+            Rua: {{ data.adress.rua }} <br />
+            Numero: {{ data.adress.numero }} <br />
+             Bairro: {{ data.adress.bairro }} <br />
+            Cidade: {{ data.adress.cidade }} <br />
+            Estado: {{ data.adress.estado }} <br />
+
+            <!-- <figure>
               <img :src="imagePath" />
-            </figure>
+            </figure> -->
           </div>
         </QExpansionItem>
       </template>
@@ -134,29 +163,29 @@ export default {
     },
     dataValue () {
       return get(this.data, 'valorProduto', 0)
-    },
-    qtnLabel () {
-      if (this.isOnlineProduct) {
-        return 'URL do Produto'
-      }
-
-      if (this.isFisicoProduct) {
-        return 'Imagem'
-      }
-
-      return 'Descrição'
-    },
-    qtnIcon () {
-      if (this.isOnlineProduct) {
-        return 'fas fa-external-link-alt'
-      }
-
-      if (this.isFisicoProduct) {
-        return 'far fa-images'
-      }
-
-      return 'far fa-comment-alt'
     }
+    // qtnLabel () {
+    //   if (this.isOnlineProduct) {
+    //     return 'URL do Produto'
+    //   }
+
+    //   if (this.isFisicoProduct) {
+    //     return 'Imagem'
+    //   }
+
+    //   return 'Descrição'
+    // },
+    // qtnIcon () {
+    //   if (this.isOnlineProduct) {
+    //     return 'fas fa-external-link-alt'
+    //   }
+
+    //   if (this.isFisicoProduct) {
+    //     return 'far fa-images'
+    //   }
+
+    //   return 'far fa-comment-alt'
+    // }
   },
   methods: {
     expand () {
@@ -174,7 +203,8 @@ export default {
   font-size: 25pt;
   display: inline;
 }
-.btn-likeUp {
-  margin-right: 150px;
+/* Gambi das brabas */
+.btn-info {
+  left: 25%;
 }
 </style>
