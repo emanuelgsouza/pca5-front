@@ -35,6 +35,7 @@
       </QStep>
 
       <QStep
+        v-if="!isOnlineProduct"
         :name="3"
         title="Nos dê uma imagem desse produto (Opcional)"
         icon="add_a_photo"

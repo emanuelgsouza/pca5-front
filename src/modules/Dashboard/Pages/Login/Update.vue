@@ -34,6 +34,7 @@
             v-model="model.birthday"
             mask="date"
             :rules="['date']"
+            label="Data de nascimento"
             required
           >
             <template v-slot:append>
@@ -47,6 +48,15 @@
               </QIcon>
             </template>
           </QInput>
+
+          <!--
+          <QBtn
+          color="primary"
+          label="EULA"
+
+          />
+
+          <br /> -->
 
           <QBtn
             color="primary"
