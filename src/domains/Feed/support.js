@@ -3,7 +3,7 @@ import $http from 'src/services/http'
 
 export const getMettersToApi = metters => metters || 3
 
-export const getFilter = filterObject => {
+export const getFilter = (filterObject = {}) => {
   return {
     type: filterObject.type || 'all',
     metters: getMettersToApi(filterObject.metters || 3)
