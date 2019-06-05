@@ -91,12 +91,13 @@ module.exports = function (ctx) {
     },
 
     pwa: {
-      // workboxPluginMode: 'InjectManifest',
-      // workboxOptions: {},
+      workboxOptions: {
+        skipWaiting: true
+      },
       manifest: {
-        // name: 'Quasar App',
-        // short_name: 'Quasar-PWA',
-        // description: 'Best PWA App in town!',
+        name: 'Alot',
+        short_name: 'Alot',
+        description: 'Encontre o que você procura aqui!',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
