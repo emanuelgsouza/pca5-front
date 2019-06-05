@@ -10,15 +10,15 @@ export const getFilter = (filterObject = {}) => {
   }
 }
 
-export const buildLoadFeedURL = (payload = {}) => {
-  const type = payload.type || 'all'
-  const page = payload.page || 1
+export const buildLoadFeedURL = (filter = {}, pagination = {}) => {
+  const type = filter.type || 'all'
+  const page = pagination.page || 1
 
   return `/api/search/all?type=${type}&page=${page}`
 }
 
-export const getFeed = payload => {
+export const getFeed = (filter, pagination) => {
   return $http
-    .get(buildLoadFeedURL(payload))
+    .get(buildLoadFeedURL(filter, pagination))
     .then(axiosData => get(axiosData, 'data', []))
 }

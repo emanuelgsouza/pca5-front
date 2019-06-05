@@ -49,9 +49,9 @@ export function loadFeed ({ commit, state }) {
   commit(TYPES.SET_FEED_LOADING, true)
   // TODO: pensar em quando der merda na execução do código, mostrar um erro para o usuário relacionado ao feed
 
-  const { filter } = state
+  const { filter, pagination } = state
 
-  return getFeed(filter)
+  return getFeed(filter, pagination)
     .then(feedData => {
       commit(TYPES.SET_FEED, feedData)
       commit(TYPES.SET_FEED_LOADING, false)
@@ -70,6 +70,8 @@ export function loadFeedFromFilter ({ commit, state }) {
   // const filter = payload.filter || {}
   commit(TYPES.SET_FEED_LOADING, true)
   // TODO: pensar em quando der merda na execução do código, mostrar um erro para o usuário relacionado ao feed
+
+  commit(TYPES.SET_PAGINATION, { page: 1 })
 
   const { filter } = state
 
@@ -92,6 +94,8 @@ export function resetFeed ({ commit }) {
   // const filter = payload.filter || {}
   commit(TYPES.SET_FEED_LOADING, true)
   // TODO: pensar em quando der merda na execução do código, mostrar um erro para o usuário relacionado ao feed
+
+  commit(TYPES.SET_PAGINATION, { page: 1 })
 
   return getFeed()
     .then(feedData => {

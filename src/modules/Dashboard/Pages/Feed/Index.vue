@@ -49,7 +49,7 @@ import {
   QSpinnerFacebook
 } from 'quasar'
 import { isFunction } from 'lodash'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 import Card from './Card'
 
 export default {
@@ -70,6 +70,7 @@ export default {
   },
   methods: {
     ...mapActions('application', ['loadFeed', 'resetFeed']),
+    ...mapMutations('application', ['setPagination']),
     processStopFeed (bool) {
       if (bool) {
         this.$refs.infiniteScroll.stop()
@@ -79,14 +80,12 @@ export default {
       this.$refs.infiniteScroll.reset()
       this.$refs.infiniteScroll.resume()
     },
-    onLoadMoreData (index, done) {
-      const data = {
-        type: 'all',
-        page: index
-      }
+    onLoadMoreData (page, done) {
+      this.setPagination({ page })
 
-      this.loadFeed(data)
-        .then(done)
+      this.$nextTick(() => {
+        this.loadFeed().then(done)
+      })
     },
     processError () {
       this.$refs.infiniteScroll.stop()

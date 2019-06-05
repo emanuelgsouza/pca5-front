@@ -47,5 +47,8 @@ export default {
   },
   [ TYPES.SET_FILTER ] (state, filterObject) {
     state.filter = getFilter(filterObject)
+  },
+  [ TYPES.SET_PAGINATION ] (state, pagination) {
+    state.pagination = { ...pagination }
   }
 }

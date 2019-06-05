@@ -14,5 +14,8 @@ export default {
   filter: {
     type: 'all',
     metters: 3
+  },
+  pagination: {
+    page: 1
   }
 }

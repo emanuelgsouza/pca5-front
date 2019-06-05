@@ -17,3 +17,5 @@ export const SET_FEED_LOADING = 'setFeedLoading'
 export const SET_STOP_FEED_LOADING = 'setStopFeedLoading'
 
 export const SET_FILTER = 'setFilter'
+
+export const SET_PAGINATION = 'setPagination'
