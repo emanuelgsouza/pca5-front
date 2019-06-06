@@ -29,13 +29,17 @@
       <QSpinnerFacebook size="50px" color="primary" />
     </QInnerLoading>
 
-    <QPageScroller expand position="top" :scroll-offset="150" :offset="[0, 0]">
-      <div
-        class="col cursor-pointer q-pa-sm bg-positive text-white text-center"
+    <QPageScroller
+      position="bottom-right"
+      :scroll-offset="150"
+      :offset="[20, 20]"
+    >
+      <QBtn
+        fab
+        color="accent"
+        icon="refresh"
         @click="resetLoadData"
-      >
-        Recarregar
-      </div>
+      />
     </QPageScroller>
   </QPage>
 </template>
