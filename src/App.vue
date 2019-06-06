@@ -49,7 +49,7 @@ export default {
     document.addEventListener('sw:update', () => {
       const reload = () => document.location.reload(true)
       this.$q.dialog({
-        title: 'Update',
+        title: 'Atualização disponível',
         message: 'Uma versão mais atualizada já está disponível, clique em Ok para atualizar',
         position: 'top',
         cancel: true
