@@ -11,6 +11,7 @@
         :offtet="100"
         @load="onLoadMoreData"
       >
+        <FeedFilters />
         <div class="row q-col-gutter-sm">
           <div class="col-12 col-md-4" v-for="(data, key) in feed" :key="key">
             <Card class="feed-card" :data="data" />
@@ -55,11 +56,13 @@ import {
 import { isFunction } from 'lodash'
 import { mapActions, mapState, mapMutations } from 'vuex'
 import Card from './Card'
+import FeedFilters from './FeedFilters'
 
 export default {
   name: 'DashboardPageFeed',
   components: {
     Card,
+    FeedFilters,
     QInnerLoading,
     QPageScroller,
     QPullToRefresh,

@@ -17,15 +17,6 @@
           v-model="model.search"
         /> -->
 
-        <QSelect
-          map-options
-          emit-value
-          class="teste"
-          v-model="model.type"
-          :options="optionsToSearch"
-          label="Tipo de busca"
-        />
-
         <br />
 
         <QItemSection>
@@ -66,53 +57,26 @@
 <script>
 import {
   // QInput,
-  QSlider,
-  QSelect
+  QSlider
 } from 'quasar'
-import { mapMutations, mapState } from 'vuex'
+import feedFilterMixin from 'src/domains/Feed/mixins/filter'
 import modalMixin from 'src/support/mixins/modal'
 
 export default {
   name: 'SearchModal',
-  mixins: [ modalMixin ],
+  mixins: [ modalMixin, feedFilterMixin ],
   components: {
     // QInput,
-    QSlider,
-    QSelect
+    QSlider
   },
   data: () => ({
-    optionsToSearch: [
-      {
-        label: 'Produto Online',
-        value: 'po'
-      },
-      {
-        label: 'Produto Físico',
-        value: 'pf'
-      },
-      {
-        label: 'Serviço',
-        value: 'se'
-      },
-      {
-        label: 'Todos os tipos',
-        value: 'all'
-      }
-    ],
     model: {
       search: '',
       type: 'all',
       metters: 3
     }
   }),
-  computed: {
-    ...mapState('application', ['filter'])
-  },
-  watch: {
-    filter: 'syncFilter'
-  },
   methods: {
-    ...mapMutations('application', ['setFilter']),
     onSearch () {
       this.setFilter(this.model)
 
@@ -120,13 +84,7 @@ export default {
     },
     onClose () {
       this.syncFilter(this.filter)
-    },
-    syncFilter (filter) {
-      this.model = { ...filter }
     }
-  },
-  mounted () {
-    this.syncFilter(this.filter)
   }
 }
 </script>
