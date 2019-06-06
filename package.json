@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
-    "dev": "NODE_ENV=development quasar dev -m spa",
+    "dev": "quasar dev -m spa",
     "test": "echo \"No test specified\" && exit 0",
     "build": "quasar build -m pwa"
   },
