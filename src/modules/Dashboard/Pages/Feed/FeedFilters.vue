@@ -1,7 +1,7 @@
 <template>
   <div class="feed-filters row justify-between">
     <div>
-      <QChip square dense color="primary" v-if="hasLabelData">
+      <QChip square dense :color="cardColor" v-if="hasLabelData">
         {{ labelData }}
       </QChip>
     </div>
@@ -64,6 +64,15 @@ export default {
     }
   }),
   computed: {
+    cardColor () {
+      if (this.model.type === 'po') {
+        return 'primary'
+      }
+      if (this.model.type === 'pf') {
+        return 'secondary'
+      }
+      return 'info'
+    },
     hasLabelData () {
       return !isNil(this.labelData)
     },

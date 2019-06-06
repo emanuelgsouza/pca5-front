@@ -1,6 +1,5 @@
 <template>
   <QPage padding class="body">
-    <!-- <p> Veja aqui os produtos / serviços que selecionamos para você </p> -->
 
     <QPullToRefresh
       @refresh="resetLoadData"

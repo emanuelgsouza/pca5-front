@@ -1,5 +1,5 @@
 <template>
-  <QCard class="full-width">
+  <QCard class="full-width" @click="expand">
     <QCardSection :class="`bg-${cardColor} relative-position`">
       <QChip
         class="absolute-left"
@@ -12,7 +12,7 @@
       </div>
     </QCardSection>
 
-    <QCardSection class="no-padding text-center">
+    <QCardSection class="no-padding text-center" >
       <div>
         <figure>
           <img :src="imagePath">
@@ -38,6 +38,7 @@
         </div>
       </div>
 
+      <!-- Informacoes dos produtos online -->
       <template v-if="isOnlineProduct">
         <QExpansionItem v-model="expanded">
           <div class="text-center q-my-md">
@@ -55,22 +56,21 @@
         </QExpansionItem>
       </template>
 
+      <!-- Informacoes dos servicos -->
       <template v-if="isService">
         <QExpansionItem v-model="expanded">
-          <div class="text-center q-my-md">
+          <div class="q-my-md">
             <QIcon
               size="24px"
               name="fas fa-map-marker-alt"
               :color="cardColor"
             />
-          </div>
-          <div class="text-left">
-            Categoria: {{ data.categoria }} <br />
-            Rua: {{ data.adress.rua }} <br />
-            Numero: {{ data.adress.numero }} <br />
-            Bairro: {{ data.adress.bairro }} <br />
-            Cidade: {{ data.adress.cidade }} <br />
-            Estado: {{ data.adress.estado }} <br />
+
+              {{ data.adress.rua }} ,
+              {{ data.adress.numero }},
+              {{ data.adress.bairro }},
+              {{ data.adress.cidade }},
+              {{ data.adress.estado }}
           </div>
 
           <p class="text-italic"> {{ dataDescription }} </p>
@@ -78,26 +78,20 @@
         </QExpansionItem>
       </template>
 
+      <!-- Informacoes dos produtos fisicos -->
       <template v-if="isFisicoProduct">
         <QExpansionItem v-model="expanded">
-          <div class="text-center q-my-md">
+          <div class="q-my-md">
             <QIcon
               size="24px"
               name="fas fa-map-marker-alt"
               :color="cardColor"
             />
-          </div>
-          <div class="text-left">
-            Categoria: {{ data.categoria }} <br />
-            Rua: {{ data.adress.rua }} <br />
-            Numero: {{ data.adress.numero }} <br />
-             Bairro: {{ data.adress.bairro }} <br />
-            Cidade: {{ data.adress.cidade }} <br />
-            Estado: {{ data.adress.estado }} <br />
-
-            <!-- <figure>
-              <img :src="imagePath" />
-            </figure> -->
+              {{ data.adress.rua }} ,
+              {{ data.adress.numero }},
+              {{ data.adress.bairro }},
+              {{ data.adress.cidade }},
+              {{ data.adress.estado }}
           </div>
         </QExpansionItem>
       </template>
