@@ -12,7 +12,7 @@
       </div>
     </QCardSection>
 
-    <QCardSection class="no-padding text-center" >
+    <QCardSection class="no-padding text-center" v-if="isFisicoProduct">
       <div>
         <figure>
           <img :src="imagePath">
@@ -20,78 +20,52 @@
       </div>
     </QCardSection>
 
-    <QCardSection class="card-footer">
-      <div class="row justify-between items-center">
-        <div>
-          <!-- TODO: Implementar filtro para preço -->
-          <p class="text-body1 feed-price"> R$ {{ dataValue }} </p>
-        </div>
-        <div>
-          <QBtn
-            round
-            flat
-            class="btn-info"
-            color="primary"
-            icon="fas fa-info-circle"
-            @click="expand"
-          />
-        </div>
+    <QCardSection class="card-footer no-padding">
+      <div class="text-center q-px-md q-pb-md">
+        <p class="text-body1 feed-price"> R$ {{ dataValue }} </p>
       </div>
 
       <!-- Informacoes dos produtos online -->
       <template v-if="isOnlineProduct">
         <QExpansionItem v-model="expanded">
-          <div class="text-center q-my-md">
+          <QSeparator  />
+          <div class="q-pa-md">
             <QIcon
               size="24px"
-              name="fas fa-external-link-alt"
+              name="language"
               :color="cardColor"
             />
+              <span> {{ url }} </span>
           </div>
-
-          <div class="text-left">
-            <p> <a :href="url" target="blanck"> Confira o produto </a> </p>
-          </div>
-
         </QExpansionItem>
       </template>
 
       <!-- Informacoes dos servicos -->
       <template v-if="isService">
         <QExpansionItem v-model="expanded">
-          <div class="q-my-md">
+          <QSeparator  />
+          <div class="q-pa-md">
             <QIcon
               size="24px"
-              name="fas fa-map-marker-alt"
+              name="place"
               :color="cardColor"
             />
-
-              {{ data.adress.rua }} ,
-              {{ data.adress.numero }},
-              {{ data.adress.bairro }},
-              {{ data.adress.cidade }},
-              {{ data.adress.estado }}
+              <span> {{ adressExtens }} </span>
           </div>
-
-          <p class="text-italic"> {{ dataDescription }} </p>
-          <!-- {{ dataDescription }} -->
         </QExpansionItem>
       </template>
 
       <!-- Informacoes dos produtos fisicos -->
       <template v-if="isFisicoProduct">
         <QExpansionItem v-model="expanded">
-          <div class="q-my-md">
+          <QSeparator  />
+          <div class="q-pa-md">
             <QIcon
               size="24px"
-              name="fas fa-map-marker-alt"
+              name="place"
               :color="cardColor"
             />
-              {{ data.adress.rua }} ,
-              {{ data.adress.numero }},
-              {{ data.adress.bairro }},
-              {{ data.adress.cidade }},
-              {{ data.adress.estado }}
+              <span> {{ adressExtens }} </span>
           </div>
         </QExpansionItem>
       </template>
@@ -103,10 +77,11 @@
 import {
   QCard,
   QChip,
+  QSeparator,
   QCardSection,
   QExpansionItem
 } from 'quasar'
-import { get, isEmpty } from 'lodash'
+import { get, isEmpty, capitalize } from 'lodash'
 import { FEED_TYPES, FEED_TYPES_NAMES } from 'src/domains/Feed/constants'
 import { loadIconCategories } from 'src/domains/Categories/support/load-categories'
 
@@ -115,6 +90,7 @@ export default {
   components: {
     QCard,
     QChip,
+    QSeparator,
     QCardSection,
     QExpansionItem
   },
@@ -178,6 +154,23 @@ export default {
     },
     categoryIcon () {
       return loadIconCategories(this.category)
+    },
+    adress () {
+      return this.data.adress || {}
+    },
+    adressExtens () {
+      return [
+        this.adress.rua,
+        this.adress.numero,
+        this.adress.cidade,
+        this.adress.estado,
+        this.adress.pais
+      ]
+        .map(capitalize)
+        .reduce((acc, word) => {
+          acc += acc.length ? `, ${word}` : word
+          return acc
+        }, '')
     }
     // qtnLabel () {
     //   if (this.isOnlineProduct) {
