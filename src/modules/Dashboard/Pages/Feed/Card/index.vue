@@ -1,6 +1,12 @@
 <template>
   <QCard class="full-width">
-    <QCardSection :class="`bg-${cardColor}`">
+    <QCardSection :class="`bg-${cardColor} relative-position`">
+      <QChip
+        class="absolute-left"
+        square
+        color="white"
+        :icon="categoryIcon"
+      />
       <div class="text-h5 relative-position text-center">
         {{ dataName }}
       </div>
@@ -102,18 +108,19 @@
 <script>
 import {
   QCard,
-  // QSeparator,
+  QChip,
   QCardSection,
   QExpansionItem
 } from 'quasar'
 import { get, isEmpty } from 'lodash'
 import { FEED_TYPES, FEED_TYPES_NAMES } from 'src/domains/Feed/constants'
+import { loadIconCategories } from 'src/domains/Categories/support/load-categories'
 
 export default {
   name: 'DashboardCard',
   components: {
     QCard,
-    // QSeparator,
+    QChip,
     QCardSection,
     QExpansionItem
   },
@@ -171,6 +178,12 @@ export default {
       }
 
       return this.isFisicoProduct ? 'secondary' : 'info'
+    },
+    category () {
+      return get(this.data, 'categoria', '')
+    },
+    categoryIcon () {
+      return loadIconCategories(this.category)
     }
     // qtnLabel () {
     //   if (this.isOnlineProduct) {
@@ -217,5 +230,9 @@ export default {
 
 .card-footer {
   padding-top: 16px !important;
+}
+
+.q-chip__icon--left {
+  margin: 0 !important;
 }
 </style>
