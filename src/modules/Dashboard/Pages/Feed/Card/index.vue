@@ -224,7 +224,7 @@ export default {
 }
 
 .card-icon {
-  top: 10px;
-  left: 10px;
+  top: 18px;
+  left: 15px;
 }
 </style>

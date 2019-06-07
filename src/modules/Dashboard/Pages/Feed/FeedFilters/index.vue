@@ -1,6 +1,6 @@
 <template>
-  <div class="feed-filters">
-    <p class="text-body1"> Filtrar por </p>
+  <div class="feed-filters q-my-md">
+    <!-- <p class="text-body1"> Filtrar por </p> -->
     <div class="row justify-between">
       <Item
         class="col-3"

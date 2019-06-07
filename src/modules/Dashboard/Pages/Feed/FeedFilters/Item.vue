@@ -1,11 +1,12 @@
 <template>
   <div :class="`filter-container text-center text-${color}`">
     <QIcon
+      class="cursor-pointer"
       size="28px"
       :name="icon"
       @click="setFilter"
     />
-    <p> {{ label }} </p>
+    <p class="no-margin"> {{ label }} </p>
   </div>
 </template>
 

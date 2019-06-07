@@ -10,7 +10,7 @@
           Alot
         </q-toolbar-title> -->
 
-        <UserActions class="user-actions absolute-right" />
+        <UserActions class="user-actions absolute-center" />
 
       </q-toolbar>
     </q-header>
@@ -55,7 +55,6 @@ export default {
 }
 
 .user-actions {
-  top: 10px;
-  right: 10px;
+  width: 100%;
 }
 </style>

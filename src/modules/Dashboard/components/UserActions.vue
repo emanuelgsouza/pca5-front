@@ -3,14 +3,17 @@
     <QBtn
       v-if="isUserLoading"
       flat
-      label="Loading usuário"
+      class="full-width"
+      label="Carregando usuário..."
     />
 
     <QBtn
       v-if="!hasUser && !isUserLoading"
-      label="Login"
+      label="Entre com sua conta Google"
       color="negative"
-      icon-right="fab fa-google"
+      class="full-width"
+      flat
+      icon="fab fa-google"
       @click="login"
     />
 
@@ -53,7 +56,7 @@ import {
   QIcon,
   QItemLabel
 } from 'quasar'
-import { first } from 'lodash'
+// import { first } from 'lodash'
 import { loginWithGoogle } from 'src/services/firebase/auth'
 import injectUser from 'src/domains/User/mixins/inject-user'
 
@@ -78,7 +81,7 @@ export default {
       }
 
       if (this.isMobile) {
-        return first(this.username.split(' '))
+        return `Ola, ${this.username}`
       }
 
       return this.username

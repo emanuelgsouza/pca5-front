@@ -12,7 +12,7 @@
           @load="onLoadMoreData"
         >
           <FeedFilters />
-          <div class="row q-col-gutter-sm">
+          <div class="feed-container row q-col-gutter-sm">
             <div class="col-12 col-md-4" v-for="(data, key) in feed" :key="key">
               <Card class="feed-card" :data="data" />
             </div>
@@ -37,7 +37,7 @@
       >
         <QBtn
           fab
-          color="accent"
+          color="primary"
           icon="refresh"
           @click="resetLoadData"
         />
@@ -131,5 +131,8 @@ export default {
 </script>
 
 <style>
-
+.feed-container .feed-card:first-of-type {
+  padding-top: 0;
+  margin-top: 0;
+}
 </style>
