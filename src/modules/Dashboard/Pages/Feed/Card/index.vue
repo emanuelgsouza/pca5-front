@@ -1,11 +1,12 @@
 <template>
   <QCard class="full-width" @click="expand">
-    <QCardSection :class="`bg-${cardColor} relative-position`">
-      <QChip
-        class="absolute-left"
+    <QCardSection :class="`bg-${cardColor} text-white relative-position`">
+      <QIcon
+        class="card-icon absolute-left"
         square
+        size="28px"
         color="white"
-        :icon="categoryIcon"
+        :name="categoryIcon"
       />
       <div class="text-h5 relative-position text-center">
         {{ dataName }}
@@ -76,7 +77,8 @@
 <script>
 import {
   QCard,
-  QChip,
+  QIcon,
+  // QChip,
   QSeparator,
   QCardSection,
   QExpansionItem
@@ -84,12 +86,14 @@ import {
 import { get, isEmpty, capitalize } from 'lodash'
 import { FEED_TYPES, FEED_TYPES_NAMES } from 'src/domains/Feed/constants'
 import { loadIconCategories } from 'src/domains/Categories/support/load-categories'
+import { getColorByType } from 'src/domains/Feed/support'
 
 export default {
   name: 'DashboardCard',
   components: {
     QCard,
-    QChip,
+    QIcon,
+    // QChip,
     QSeparator,
     QCardSection,
     QExpansionItem
@@ -143,11 +147,7 @@ export default {
       return get(this.data, 'valorProduto', 0)
     },
     cardColor () {
-      if (this.isOnlineProduct) {
-        return 'primary'
-      }
-
-      return this.isFisicoProduct ? 'secondary' : 'info'
+      return getColorByType(this.dataType)
     },
     category () {
       return get(this.data, 'categoria', '')
@@ -221,5 +221,10 @@ export default {
 
 .q-chip__icon--left {
   margin: 0 !important;
+}
+
+.card-icon {
+  top: 10px;
+  left: 10px;
 }
 </style>

@@ -1,5 +1,6 @@
 import { get } from 'lodash'
 import $http from 'src/services/http'
+import { FEED_TYPES_COLORS } from './constants'
 
 export const getMettersToApi = metters => metters || 3
 
@@ -21,4 +22,8 @@ export const getFeed = (filter, pagination) => {
   return $http
     .get(buildLoadFeedURL(filter, pagination))
     .then(axiosData => get(axiosData, 'data', []))
+}
+
+export const getColorByType = (type) => {
+  return FEED_TYPES_COLORS[type]
 }

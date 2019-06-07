@@ -11,3 +11,10 @@ export const FEED_TYPES_NAMES = {
   'se': 'Serviço',
   'all': 'Todos os produtos'
 }
+
+export const FEED_TYPES_COLORS = {
+  'pf': 'primary',
+  'po': 'secondary',
+  'se': 'accent',
+  'all': 'black'
+}
