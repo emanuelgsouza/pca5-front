@@ -13,6 +13,6 @@ export default {
   width: 100%;
   height: 255px;
   background-position: center;
-  background-image: url("https://http2.mlstatic.com/optimize/o:f_webp/resources/exhibitors/MLB-diadosnamorados/0d8c4580-78d3-11e9-a8b4-4133c313f8f8-home-slider_desktop.jpg");
+  background-image: url("https://images.unsplash.com/photo-1556742504-16b083241fab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80");
 }
 </style>
