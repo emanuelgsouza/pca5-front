@@ -54,7 +54,6 @@ export default {
     onChange (type) {
       this.model.type = type
       this.onSearch()
-      this.$refs.menu.hide()
     }
   }
 }

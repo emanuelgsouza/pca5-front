@@ -1,6 +1,9 @@
 <template>
-  <QCard class="full-width" @click="expand">
-    <QCardSection :class="`bg-${cardColor} text-white relative-position`">
+  <QCard class="full-width">
+    <QCardSection
+      :class="`bg-${cardColor} text-white relative-position`"
+      @click="expand"
+    >
       <QIcon
         class="card-icon absolute-left"
         square
@@ -13,7 +16,10 @@
       </div>
     </QCardSection>
 
-    <QCardSection class="no-padding text-center" v-if="isFisicoProduct">
+    <QCardSection
+      class="no-padding text-center" v-if="isFisicoProduct"
+      @click="expand"
+    >
       <div>
         <figure>
           <img :src="imagePath">
@@ -36,7 +42,7 @@
               name="language"
               :color="cardColor"
             />
-              <span> {{ url }} </span>
+              <span @click="openUrl"> {{ url }} </span>
           </div>
         </QExpansionItem>
       </template>
@@ -51,7 +57,7 @@
               name="place"
               :color="cardColor"
             />
-              <span> {{ adressExtens }} </span>
+              <span @click="openMaps"> {{ adressExtens }} </span>
           </div>
         </QExpansionItem>
       </template>
@@ -66,7 +72,7 @@
               name="place"
               :color="cardColor"
             />
-              <span> {{ adressExtens }} </span>
+              <span @click="openMaps"> {{ adressExtens }} </span>
           </div>
         </QExpansionItem>
       </template>
@@ -83,7 +89,7 @@ import {
   QCardSection,
   QExpansionItem
 } from 'quasar'
-import { get, isEmpty, capitalize } from 'lodash'
+import { get, isEmpty, first, last, capitalize } from 'lodash'
 import { FEED_TYPES, FEED_TYPES_NAMES } from 'src/domains/Feed/constants'
 import { loadIconCategories } from 'src/domains/Categories/support/load-categories'
 import { getColorByType } from 'src/domains/Feed/support'
@@ -171,33 +177,26 @@ export default {
           acc += acc.length ? `, ${word}` : word
           return acc
         }, '')
+    },
+    longitude () {
+      return first(get(this.data, 'loc.coordinates'))
+    },
+    latitude () {
+      return last(get(this.data, 'loc.coordinates'))
+    },
+    mapsUrl () {
+      return `https://maps.google.com/?ll=${this.latitude},${this.longitude}`
     }
-    // qtnLabel () {
-    //   if (this.isOnlineProduct) {
-    //     return 'URL do Produto'
-    //   }
-
-    //   if (this.isFisicoProduct) {
-    //     return 'Imagem'
-    //   }
-
-    //   return 'Descrição'
-    // },
-    // qtnIcon () {
-    //   if (this.isOnlineProduct) {
-    //     return 'fas fa-external-link-alt'
-    //   }
-
-    //   if (this.isFisicoProduct) {
-    //     return 'far fa-images'
-    //   }
-
-    //   return 'far fa-comment-alt'
-    // }
   },
   methods: {
     expand () {
       this.expanded = !this.expanded
+    },
+    openMaps () {
+      window.open(this.mapsUrl, 'blank')
+    },
+    openUrl () {
+      window.open(this.url, 'blank')
     }
   }
 }
