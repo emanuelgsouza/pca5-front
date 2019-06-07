@@ -3,15 +3,14 @@
 
     <q-header class="bg-white text-primary">
       <q-toolbar>
-        <q-avatar>
-          <!-- Coloque a logo aqui -->
+        <!-- <q-avatar>
           <img src="statics/quasar-logo.png" alt="">
         </q-avatar>
         <q-toolbar-title>
           Alot
-        </q-toolbar-title>
+        </q-toolbar-title> -->
 
-        <UserActions />
+        <UserActions class="user-actions absolute-right" />
 
       </q-toolbar>
     </q-header>
@@ -27,7 +26,10 @@
   </q-layout>
 </template>
 <script>
-import { QAvatar, QFooter } from 'quasar'
+import {
+  // QAvatar,
+  QFooter
+} from 'quasar'
 import FloatingButton from './components/FloatingButton'
 import UserActions from './components/UserActions'
 
@@ -38,13 +40,22 @@ export default {
       left: false
     }
   },
-  components: { QAvatar, QFooter, FloatingButton, UserActions }
+  components: {
+    // QAvatar,
+    QFooter,
+    FloatingButton,
+    UserActions
+  }
 }
 </script>
 
 <style>
-
 .index_link {
   text-decoration: none;
+}
+
+.user-actions {
+  top: 10px;
+  right: 10px;
 }
 </style>

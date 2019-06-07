@@ -1,46 +1,48 @@
 <template>
-  <QPage padding class="body">
-
-    <QPullToRefresh
-      @refresh="resetLoadData"
-      icon="lightbulb"
-    >
-      <QInfiniteScroll
-        ref="infiniteScroll"
-        :offtet="100"
-        @load="onLoadMoreData"
+  <QPage class="body">
+    <Hero />
+    <div class="q-pa-xs">
+      <QPullToRefresh
+        @refresh="resetLoadData"
+        icon="lightbulb"
       >
-        <FeedFilters />
-        <div class="row q-col-gutter-sm">
-          <div class="col-12 col-md-4" v-for="(data, key) in feed" :key="key">
-            <Card class="feed-card" :data="data" />
+        <QInfiniteScroll
+          ref="infiniteScroll"
+          :offtet="100"
+          @load="onLoadMoreData"
+        >
+          <FeedFilters />
+          <div class="row q-col-gutter-sm">
+            <div class="col-12 col-md-4" v-for="(data, key) in feed" :key="key">
+              <Card class="feed-card" :data="data" />
+            </div>
           </div>
-        </div>
 
-        <template v-slot:loading>
-          <div class="row justify-center q-my-md">
-            <QSpinnerFacebook size="50px" color="primary" />
-          </div>
-        </template>
-      </QInfiniteScroll>
-    </QPullToRefresh>
+          <template v-slot:loading>
+            <div class="row justify-center q-my-md">
+              <QSpinnerFacebook size="50px" color="primary" />
+            </div>
+          </template>
+        </QInfiniteScroll>
+      </QPullToRefresh>
 
-    <QInnerLoading :showing="feedLoading">
-      <QSpinnerFacebook size="50px" color="primary" />
-    </QInnerLoading>
+      <QInnerLoading :showing="feedLoading">
+        <QSpinnerFacebook size="50px" color="primary" />
+      </QInnerLoading>
 
-    <QPageScroller
-      position="bottom-right"
-      :scroll-offset="150"
-      :offset="[20, 20]"
-    >
-      <QBtn
-        fab
-        color="accent"
-        icon="refresh"
-        @click="resetLoadData"
-      />
-    </QPageScroller>
+      <QPageScroller
+        position="bottom-right"
+        :scroll-offset="150"
+        :offset="[20, 20]"
+      >
+        <QBtn
+          fab
+          color="accent"
+          icon="refresh"
+          @click="resetLoadData"
+        />
+      </QPageScroller>
+    </div>
   </QPage>
 </template>
 
@@ -55,12 +57,14 @@ import {
 import { isFunction } from 'lodash'
 import { mapActions, mapState, mapMutations } from 'vuex'
 import Card from './Card'
+import Hero from './Hero'
 import FeedFilters from './FeedFilters'
 
 export default {
   name: 'DashboardPageFeed',
   components: {
     Card,
+    Hero,
     FeedFilters,
     QInnerLoading,
     QPageScroller,
