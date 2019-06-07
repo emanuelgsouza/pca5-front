@@ -4,46 +4,45 @@
    ref="modal"
    @hide="onClose"
   >
-    <QCard>
+    <QCard class="card-size">
       <QCardSection>
-        <div class="text-h5 text-center"> Encontre o que procura </div>
+        <div class="text-h5 text-center"> Buscar produto </div>
       </QCardSection>
 
       <QCardSection>
-        <!-- TODO: implementar o autocomplete aqui -->
-        <!-- <QInput
-          label="O que deseja encontrar?"
-          debounce="1000"
-          v-model="model.search"
-        /> -->
-
-        <br />
 
         <QItemSection>
-          <label for="slider"> Selecione uma distância (Km) </label>
+        <!-- TODO: implementar o autocomplete aqui -->
+        <QInput
+          label="Nome do produto"
+          debounce="1000"
+          v-model="model.search"
+        />
+          <label for="slider"> Distância: {{ model.metters }} Km</label>
+
           <QSlider
+            color="servico"
             id="slider"
             v-model="model.metters"
             :min="1"
             :max="10"
             :step="1"
-            label
-            :label-value="model.metters + ' Km'"
           />
         </QItemSection>
-
+            <!-- label
+            :label-value="model.metters + ' Km'" -->
       </QCardSection>
 
       <QCardActions align="right">
         <QBtn
-          color="negative"
+          color="servico"
           flat
           label="Cancelar"
           v-close-popup
         />
         <QBtn
           class="q-ml-sm"
-          color="primary"
+          color="fisico"
           flat
           label="Pesquisar"
           @click="onSearch"
@@ -56,7 +55,7 @@
 
 <script>
 import {
-  // QInput,
+  QInput,
   QSlider
 } from 'quasar'
 import feedFilterMixin from 'src/domains/Feed/mixins/filter'
@@ -66,7 +65,7 @@ export default {
   name: 'SearchModal',
   mixins: [ modalMixin, feedFilterMixin ],
   components: {
-    // QInput,
+    QInput,
     QSlider
   },
   data: () => ({
@@ -90,5 +89,7 @@ export default {
 </script>
 
 <style>
-
+.card-size {
+  min-width: 400px;
+}
 </style>

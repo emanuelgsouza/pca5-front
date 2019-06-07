@@ -42,7 +42,7 @@
               name="language"
               :color="cardColor"
             />
-              <span class="teste" @click="openUrl"> Acesse aqui a página porduto </span>
+              <span class="text-bold" @click="openUrl"> Acesse aqui a página produto </span>
           </div>
         </QExpansionItem>
       </template>
@@ -57,7 +57,7 @@
               name="place"
               :color="cardColor"
             />
-              <span @click="openMaps"> {{ adressExtens }} </span>
+              <span class="text-bold" @click="openMaps"> {{ adressExtens }} </span>
           </div>
         </QExpansionItem>
       </template>
@@ -72,7 +72,7 @@
               name="place"
               :color="cardColor"
             />
-              <span @click="openMaps"> {{ adressExtens }} </span>
+              <span class="text-bold" @click="openMaps"> {{ adressExtens }} </span>
           </div>
         </QExpansionItem>
       </template>
@@ -110,7 +110,7 @@ export default {
     }
   },
   data: () => ({
-    expanded: false
+    expanded: true
   }),
   computed: {
     dataName () {
@@ -226,7 +226,7 @@ export default {
   top: 18px;
   left: 15px;
 }
-.teste {
-  font-weight: 700;
+.text-bold {
+  font-weight: 500;
 }
 </style>
