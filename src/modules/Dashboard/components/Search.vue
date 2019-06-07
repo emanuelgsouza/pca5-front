@@ -18,8 +18,12 @@
           debounce="1000"
           v-model="model.search"
         />
-          <label for="slider"> Distância: {{ model.metters }} Km</label>
 
+        </QItemSection>
+
+        <br />
+
+        <label for="slider"> Distância: {{ model.metters }} Km</label>
           <QSlider
             color="servico"
             id="slider"
@@ -28,22 +32,20 @@
             :max="10"
             :step="1"
           />
-        </QItemSection>
             <!-- label
             :label-value="model.metters + ' Km'" -->
       </QCardSection>
 
-      <QCardActions align="right">
+      <QCardActions align="center">
         <QBtn
-          color="servico"
           flat
+          color="servico"
           label="Cancelar"
           v-close-popup
         />
         <QBtn
-          class="q-ml-sm"
-          color="fisico"
           flat
+          color="fisico"
           label="Pesquisar"
           @click="onSearch"
         />
