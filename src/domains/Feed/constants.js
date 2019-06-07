@@ -13,8 +13,8 @@ export const FEED_TYPES_NAMES = {
 }
 
 export const FEED_TYPES_COLORS = {
-  'pf': 'primary',
-  'po': 'secondary',
-  'se': 'accent',
+  'pf': 'fisico',
+  'po': 'online',
+  'se': 'servico',
   'all': 'black'
 }
