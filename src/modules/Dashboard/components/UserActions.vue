@@ -20,6 +20,7 @@
     <QBtnDropdown
       v-if="hasUser && !isUserLoading"
       flat
+      class="full-width"
       :label="userName">
 
       <QList>

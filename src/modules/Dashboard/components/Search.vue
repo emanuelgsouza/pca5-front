@@ -1,6 +1,5 @@
 <template>
   <QDialog
-   style="width: 100%"
    ref="modal"
    @hide="onClose"
   >
@@ -36,7 +35,7 @@
             :label-value="model.metters + ' Km'" -->
       </QCardSection>
 
-      <QCardActions align="center">
+      <QCardActions align="right">
         <QBtn
           flat
           color="servico"
@@ -45,6 +44,7 @@
         />
         <QBtn
           flat
+          :disabled="searchDisable"
           color="fisico"
           label="Pesquisar"
           @click="onSearch"
@@ -60,6 +60,7 @@ import {
   QInput,
   QSlider
 } from 'quasar'
+import { isEmpty } from 'lodash'
 import feedFilterMixin from 'src/domains/Feed/mixins/filter'
 import modalMixin from 'src/support/mixins/modal'
 
@@ -73,10 +74,14 @@ export default {
   data: () => ({
     model: {
       search: '',
-      type: 'all',
       metters: 3
     }
   }),
+  computed: {
+    searchDisable () {
+      return isEmpty(this.model.search)
+    }
+  },
   methods: {
     onSearch () {
       this.setFilter(this.model)
@@ -92,6 +97,6 @@ export default {
 
 <style>
 .card-size {
-  min-width: 400px;
+  min-width: 360px;
 }
 </style>

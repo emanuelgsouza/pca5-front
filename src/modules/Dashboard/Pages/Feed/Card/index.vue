@@ -1,7 +1,7 @@
 <template>
   <QCard class="full-width">
     <QCardSection
-      :class="`bg-${cardColor} text-white relative-position`"
+      :class="`bg-${cardColor} text-white relative-position cursor-pointer`"
       @click="expand"
     >
       <QIcon
@@ -42,7 +42,10 @@
               name="language"
               :color="cardColor"
             />
-              <span class="text-bold" @click="openUrl"> Acesse aqui a página produto </span>
+              <span
+                class="text-bold cursor-pointer"
+                @click="openUrl"> Acesse aqui a página produto
+              </span>
           </div>
         </QExpansionItem>
       </template>
@@ -57,7 +60,7 @@
               name="place"
               :color="cardColor"
             />
-              <span class="text-bold" @click="openMaps"> {{ adressExtens }} </span>
+              <span class="text-bold cursor-pointer" @click="openMaps"> {{ adressExtens }} </span>
           </div>
         </QExpansionItem>
       </template>
@@ -72,7 +75,7 @@
               name="place"
               :color="cardColor"
             />
-              <span class="text-bold" @click="openMaps"> {{ adressExtens }} </span>
+              <span class="text-bold cursor-pointer" @click="openMaps"> {{ adressExtens }} </span>
           </div>
         </QExpansionItem>
       </template>

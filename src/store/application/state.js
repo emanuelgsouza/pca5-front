@@ -12,6 +12,7 @@ export default {
   feedLoading: false,
   stopFeed: false,
   filter: {
+    search: null,
     type: 'all',
     metters: 3
   },
