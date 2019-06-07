@@ -42,7 +42,7 @@
               name="language"
               :color="cardColor"
             />
-              <span @click="openUrl"> {{ url }} </span>
+              <span class="teste" @click="openUrl"> Acesse aqui a página porduto </span>
           </div>
         </QExpansionItem>
       </template>
@@ -225,5 +225,8 @@ export default {
 .card-icon {
   top: 18px;
   left: 15px;
+}
+.teste {
+  font-weight: 700;
 }
 </style>
