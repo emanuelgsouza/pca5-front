@@ -1,49 +1,57 @@
 <template>
-  <div class='camera' ref="wrapper">
-
-    <div id="camera-select">
+  <div class="vue-camera">
+    <div class="camera-select">
       <QSelect
-        v-if="devices.length && !isAlreadyRecorded"
-        v-model="selected"
+        label="Selecione uma câmera"
         :options="devices"
-        @change="cameraChanged"
+        v-model="deviceId"
+        map-options
+        emit-value
+        stack-label
       />
     </div>
 
     <div class="camera-wrapper">
-      <video
-        ref="camera"
-        v-show="!blob || (capture === 'video' && isAlreadyRecorded) || (capture !== 'photo' && !isAlreadyRecorded)"
-        id='preview'
+      <WebCam
+        v-if="!hasImg"
+        ref="webcam"
+        :device-id="deviceId"
         width="100%"
-        height="auto"
-        autoPlay
+        :height="360"
+        @started="onStarted"
+        @stopped="onStopped"
+        @error="onError"
+        @cameras="onCameras"
+        @camera-change="onCameraChange"
       />
-      <img id="photo" ref="photo" v-if="capture === 'photo'" v-show="blob" alt="photo" width="100%" height="auto">
-    </div>
 
-    <div class="buttons-wrapper">
-      <div :class="onReadyButtonsClass">
+      <div class="buttons row justify-center">
         <QBtn
-          v-if="!isAlreadyRecorded"
+          v-if="!hasImg"
           class="record-button"
           icon="fas fa-camera"
           color="negative"
           round
           size="lg"
-          @click="action"
+          @click="onCapture"
         />
-        <div
-          class="q-pa-xs q-gutter-sm"
-          v-if="isAlreadyRecorded"
-        >
+      </div>
+    </div>
+
+    <div class="camera-preview">
+      <figure v-if="hasImg">
+        <img :src="img">
+      </figure>
+
+      <div class="buttons row justify-center">
+        <div v-if="hasImg" class="q-pa-xs q-gutter-sm">
           <QBtn
             class="reset-button capture-photo"
             icon="fas fa-redo-alt"
             color="negative"
             size="lg"
             round
-            @click="resetStream"
+            @click="onStart"
           />
 
           <QBtn
@@ -61,189 +69,85 @@
 </template>
 
 <script>
+import WebCam from './WebCam'
 import { QSelect } from 'quasar'
+import { isEmpty } from 'lodash'
 
 export default {
-  name: 'camera-component',
-  components: { QSelect },
-  props: {
-    capture: {
-      type: String,
-      default: 'video'
+  name: 'AppCamera',
+  components: {
+    QSelect,
+    WebCam
+  },
+  data () {
+    return {
+      img: null,
+      camera: null,
+      deviceId: null,
+      devices: []
     }
   },
   computed: {
-    onReadyButtonsClass () {
-      let classes = 'on-ready-buttons'
-      if (this.capture === 'video') {
-        if (this.smallPreview) {
-          classes += ' smallPreview'
-        }
-      } else {
-        classes += ' capture-photo'
-      }
-      return classes
+    device: function () {
+      return this.devices.find(n => n.deviceId === this.deviceId)
+    },
+    hasImg () {
+      return !isEmpty(this.img)
     }
   },
-
+  watch: {
+    camera (id) {
+      this.deviceId = id
+    },
+    devices () {
+      // Once we have a list select the first one
+      const [first] = this.devices
+      if (first) {
+        this.camera = first.value
+        this.deviceId = first.value
+      }
+    }
+  },
   methods: {
-    action () {
-      const actions = {
-        photo: this.takePhoto,
-        video: this.startRecording
-      }
-      const action = actions[this.capture]
-      action()
+    onCapture () {
+      this.img = this.$refs.webcam.capture()
     },
-
-    takePhoto () {
-      this.$emit('onPhoto')
-      const photo = this.$refs.photo
-      navigator.mediaDevices.getUserMedia(this.constraints).then(stream => {
-        const mediaStreamTrack = stream.getVideoTracks()[0]
-        const imageCapture = new ImageCapture(mediaStreamTrack)
-        imageCapture.takePhoto()
-          .then(blob => {
-            this.blob = blob
-            this.isAlreadyRecorded = true
-            photo.src = URL.createObjectURL(blob)
-            photo.onload = () => { URL.revokeObjectURL(this.src) }
-          })
+    onStarted (stream) {
+      console.log('On Started Event', stream)
+    },
+    onStopped (stream) {
+      console.log('On Stopped Event', stream)
+    },
+    onStop () {
+      this.$refs.webcam.stop()
+    },
+    onStart () {
+      this.img = null
+      this.$nextTick(() => {
+        this.$refs.webcam.start()
       })
     },
-
-    resetStream () {
-      this.$emit('onReset')
-      this.blob = null
-      let preview = document.getElementById('preview')
-      if (this.capture === 'photo') {
-        this.isAlreadyRecorded = false
-        return
-      }
-      navigator.mediaDevices
-        .getUserMedia(this.constraints).then(stream => {
-          preview.setAttribute('autoplay', true)
-          preview.removeAttribute('controls')
-          preview.srcObject = stream
-          preview.captureStream = preview.captureStream || preview.mozCaptureStream
-          this.isAlreadyRecorded = false
-        })
+    onError (error) {
+      console.error('On Error Event', error.message)
     },
-
+    onCameras (cameras) {
+      const cameraProcessed = cameras.map(camera => {
+        return {
+          label: camera.label,
+          value: camera.deviceId
+        }
+      })
+      this.devices = [ ...cameraProcessed ]
+      console.log('On Cameras Event', cameras)
+    },
+    onCameraChange (deviceId) {
+      this.deviceId = deviceId
+      this.camera = deviceId
+      console.log('On Camera Change Event', deviceId)
+    },
     onReady () {
-      this.$emit('onReady', this.blob)
-    },
-
-    cameraChanged () {
-      this.$emit('onCameraChanged')
-      const preview = document.getElementById('preview')
-      const videoConstraints = {}
-      videoConstraints.deviceId = { exact: this.selected.deviceId }
-      this.constraints = {
-        video: videoConstraints,
-        audio: false
-      }
-      navigator.mediaDevices
-        .getUserMedia(this.constraints)
-        .then(stream => { preview.srcObject = stream })
-        .catch(err => console.error(err))
-    },
-
-    handleWindowResize () {
-      this.smallPreview = this.$refs.wrapper.offsetWidth < 740
-    }
-  },
-
-  mounted () {
-    const camera = this.$refs.camera
-    window.addEventListener('resize', this.handleWindowResize)
-    this.handleWindowResize()
-    this.constraints = { video: true }
-    const gotDevices = (mediaDevices) => {
-      this.devices = JSON.parse(JSON.stringify(mediaDevices)).filter(d => d.kind === 'videoinput')
-      this.selected = this.devices[0]
-      let videoConstraints = {}
-      videoConstraints.deviceId = { exact: this.selected.deviceId }
-      this.constraints = {
-        video: videoConstraints,
-        audio: false
-      }
-    }
-    navigator.mediaDevices
-      .getUserMedia(this.constraints)
-      .then(stream => {
-        camera.srcObject = stream
-        return navigator.mediaDevices.enumerateDevices()
-      })
-      .then(gotDevices)
-      .catch(error => {
-        console.error(error)
-      })
-  },
-
-  beforeDestroy () {
-    window.removeEventListener('resize', this.handleWindowResize)
-  },
-
-  data () {
-    return {
-      smallPreview: false,
-      select: false,
-      blob: null,
-      devices: [],
-      constraints: {},
-      selected: null,
-      isAlreadyRecorded: false
+      this.$emit('ready', this.img)
     }
   }
 }
 </script>
-
-<style lang='stylus'>
-.camera {
-  &:hover {
-    .on-ready-buttons {
-      opacity: 1;
-    }
-  }
-}
-
-.camera-wrapper {
-  position: relative;
-  width: 100%;
-
-  #preview {
-    position: relative;
-    border-radius: 5px;
-  }
-
-  #photo {
-    position: relative;
-    border-radius: 5px;
-  }
-
-}
-.buttons-wrapper {
-  width: 100%;
-
-  .on-ready-buttons {
-    position: relative;
-    width: 60%;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    opacity: 0;
-    transition: all 1s;
-    top: calc(50% - 2rem - 20px);
-
-    &.smallPreview {
-      top: calc(50% - 2rem - 8px);
-    }
-
-    &.capture-photo {
-      text-align center;
-      opacity: 1;
-    }
-  }
-}
-</style>

@@ -11,7 +11,6 @@
     /> -->
 
     <VueCamera
-      capture="photo"
       @onReady="onReady"
     />
   </div>
@@ -21,7 +20,7 @@
 import { isEmpty, isNil } from 'lodash'
 import StepsMixin from '../mixins/steps'
 // import AppFirebaseUploader from 'src/components/AppFirebaseUploader'
-import VueCamera from 'components/VueCamera.vue'
+import VueCamera from 'components/VueCamera'
 import uuid from 'uuid'
 import storage from 'src/services/firebase/storage'
 import uploadImage from 'src/services/firebase/storage/upload-image'
