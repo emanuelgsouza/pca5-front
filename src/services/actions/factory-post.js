@@ -40,7 +40,7 @@ const factoryPost = (body, type, coordinates) => {
     return {
       payload: {
         name: get(body, 'name', null),
-        imagePath: get(body, 'url', null),
+        imagePath: get(body, 'imagePath', null),
         category: get(body, 'category', null),
         value: get(body, 'value', null),
         place: get(body, 'place', null)

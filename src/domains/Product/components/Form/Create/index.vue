@@ -148,22 +148,23 @@ export default {
         }
 
         // Product Image: wait image upload
-        if (this.step === 3) {
-          this.$q.loading.show({
-            message: 'Aguarde enquanto fazemos o upload da imagem'
-          })
+        // Como o novo componente de câmera retorna uma dataURL, não preciso fazer upload
+        // if (this.step === 3) {
+        //   this.$q.loading.show({
+        //     message: 'Aguarde enquanto fazemos o upload da imagem'
+        //   })
 
-          await this.$refs.productImage.upload()
+        //   await this.$refs.productImage.upload()
 
-          this.$q.loading.hide()
+        //   this.$q.loading.hide()
 
-          if (this.model.url) {
-            this.$q.notify({
-              message: 'A imagem chegou em nossos serviço',
-              color: 'positive'
-            })
-          }
-        }
+        //   if (this.model.url) {
+        //     this.$q.notify({
+        //       message: 'A imagem chegou em nossos serviço',
+        //       color: 'positive'
+        //     })
+        //   }
+        // }
 
         // Localization: wait form validations
         if (this.step === 4) {
@@ -208,7 +209,8 @@ export default {
       })
     },
     cleanUp () {
-      this.deleteImage()
+      // Como não há mais imagens para o Firebase, não precisamos excluir nada de lá
+      // this.deleteImage()
     },
     deleteImage () {
       // Has a image and not save this form

@@ -2,15 +2,16 @@
   <QPage padding>
     <div class="feed-filter q-gutter-md">
       <QSelect
-        v-model="produto"
+        v-model="model.name"
         use-input
+        emit-value
+        map-options
         option-value="nomeProduto"
         option-label="nomeProduto"
         input-debounce="0"
         label="Pesquise por um produto"
         :options="options"
         @filter="filterFn"
-        @filter-abort="abortFilterFn"
       />
 
       <div>
@@ -35,7 +36,8 @@
       </div>
     </div>
 
-    <div class="feed-container row q-col-gutter-sm">
+    <div v-if="hasCards" class="feed-container row q-col-gutter-sm">
+      <p> Resultados encontrados </p>
       <div class="col-12 col-md-4" v-for="(data, key) in cards" :key="key">
         <Card class="feed-card" :data="data" />
       </div>
@@ -70,7 +72,7 @@ export default {
   }),
   computed: {
     btnDisabled () {
-      return isEmpty(this.produto) && this.model.metters > 0
+      return isEmpty(this.productName) && this.model.metters > 0
     },
     hasCards () {
       return !isEmpty(this.cards)
@@ -79,7 +81,8 @@ export default {
       return this.fetchData && !this.hasCards
     },
     productName () {
-      return get(this.produto, 'nomeProduto', null)
+      // return get(this.produto, 'nomeProduto', null)
+      return this.model.name || ''
     }
   },
   methods: {
