@@ -20,7 +20,10 @@ export default {
   methods: {
     onData (model) {
       this.model = { ...model }
-      const type = this.model.is_online ? 'po' : 'pf'
+      const type = 'se'
+      this.$q.loading.show({
+        message: 'Enviando dados para o sistem'
+      })
 
       return createPost(this.model, type, this.coordinates)
         .then(() => {
@@ -31,6 +34,8 @@ export default {
             message: 'Serviço cadastrado com sucesso'
           })
 
+          this.$q.loading.hide()
+
           this.$refs.form.clear()
 
           this.$router.push({
@@ -38,6 +43,7 @@ export default {
           })
         })
         .catch(err => {
+          this.$q.loading.hide()
           console.error(err)
           this.$q.notify({
             color: 'red-5',

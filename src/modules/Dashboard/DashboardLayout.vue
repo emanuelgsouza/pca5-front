@@ -4,7 +4,7 @@
     <q-header class="bg-white text-primary">
       <q-toolbar>
         <!-- <q-avatar>
-          <img src="statics/quasar-logo.png" alt="">
+          <img src="statics/alot-logo.png" alt="">
         </q-avatar>
         <q-toolbar-title>
           Alot

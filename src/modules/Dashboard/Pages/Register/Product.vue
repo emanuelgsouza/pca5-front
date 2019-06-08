@@ -22,6 +22,10 @@ export default {
       this.model = { ...model }
       const type = this.model.is_online ? 'po' : 'pf'
 
+      this.$q.loading.show({
+        message: 'Enviando dados para o sistem'
+      })
+
       return createPost(this.model, type, this.coordinates)
         .then(() => {
           this.$q.notify({
@@ -31,6 +35,8 @@ export default {
             message: 'Produto cadastrado com sucesso'
           })
 
+          this.$q.loading.hide()
+
           this.$refs.form.clear()
 
           this.$router.push({
@@ -39,6 +45,7 @@ export default {
         })
         .catch(err => {
           console.error(err)
+          this.$q.loading.hide()
           this.$q.notify({
             color: 'red-5',
             textColor: 'white',

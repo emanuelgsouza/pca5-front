@@ -4,11 +4,15 @@
       autogrow
       :value="model.description"
       type="textarea"
-      v-model="text"
       label="Descrição"
       hint="Opcional"
       placeholder="Adicione uma pequena descrição"
-      :rules="[ val => val.length <= 140 || 'Insira no máximo 140 caracteres!']"
+      @input="value => updateModel('description', value)"
+      :rules="[
+        val => val.length <= 140 || 'Insira no máximo 140 caracteres!',
+        val => val !== null || 'Não esqueça de definir uma categoria para o serviço',
+        val => val !== '' || 'Não esqueça de definir uma categoria para o serviço'
+      ]"
     />
 
   </div>
