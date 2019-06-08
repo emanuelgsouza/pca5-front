@@ -27,3 +27,17 @@ export const getFeed = (filter, pagination) => {
 export const getColorByType = (type) => {
   return FEED_TYPES_COLORS[type]
 }
+
+export const loadAutocomplete = (keyWord) => {
+  const url = `/api/search/auto?keyWord=${keyWord}`
+
+  return $http
+    .get(url)
+    .then(axiosData => get(axiosData, 'data', []))
+}
+
+export const loadSearchResult = (data) => {
+  return $http
+    .post('/api/search/place?page=1', data)
+    .then(axiosData => get(axiosData, 'data', []))
+}

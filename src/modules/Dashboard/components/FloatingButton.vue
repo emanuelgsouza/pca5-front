@@ -10,14 +10,20 @@
       class="text-primary"
     />
 
-    <QTab
+    <QRouteTab
       icon="search"
+      :to="{
+        name: 'dashboard.search'
+      }"
       class="text-primary"
       @click="openSearch"
     />
 
-    <QTab
+    <QRouteTab
       icon="add"
+      :to="{
+        name: 'dashboard.register'
+      }"
       class="text-primary"
       @click="goToRegisterProduct"
     />
@@ -28,13 +34,13 @@
 
 <script>
 import injectUserMixin from 'src/domains/User/mixins/inject-user'
-import { QRouteTab, QTab, QTabs } from 'quasar'
+import { QRouteTab, QTabs } from 'quasar'
 import SearchModal from './Search'
 
 export default {
   name: 'FloatingButton',
   mixins: [ injectUserMixin ],
-  components: { QRouteTab, QTab, QTabs, SearchModal },
+  components: { QRouteTab, QTabs, SearchModal },
   computed: {
     isRegisterRoute () {
       return this.$route.name.indexOf('register') !== -1

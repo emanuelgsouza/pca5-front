@@ -21,6 +21,11 @@ export default [
         component: () => import('../Pages/Login/Update.vue')
       },
       {
+        path: '/dashboard/pages/search',
+        name: 'dashboard.search',
+        component: () => import('../Pages/Search/index.vue')
+      },
+      {
         path: '/dashboard/register',
         name: 'dashboard.register',
         redirect: '/dashboard/register/product',
