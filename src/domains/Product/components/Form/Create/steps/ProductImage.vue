@@ -110,8 +110,14 @@ export default {
         this.updateModel('image_file_name', filename)
       })
     },
-    onReady (blobImage) {
-      this.cameraImage = blobImage
+    onReady (dataURlString) {
+      this.cameraImage = dataURlString
+      const model = {
+        ...this.model,
+        imagePath: dataURlString
+      }
+
+      this.$emit('update:model', model)
 
       this.$emit('next')
     }
