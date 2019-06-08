@@ -11,7 +11,7 @@
     /> -->
 
     <VueCamera
-      @onReady="onReady"
+      @ready="onReady"
     />
   </div>
 </template>
