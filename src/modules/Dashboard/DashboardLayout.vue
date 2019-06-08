@@ -15,7 +15,11 @@
       </q-toolbar>
     </q-header>
 
-    <QFooter reveal class="full-width bg-white">
+    <QFooter
+      v-if="showFooter"
+      reveal
+      class="full-width bg-white"
+    >
       <FloatingButton />
     </QFooter>
 
@@ -30,6 +34,7 @@ import {
   // QAvatar,
   QFooter
 } from 'quasar'
+import { includes } from 'lodash'
 import FloatingButton from './components/FloatingButton'
 import UserActions from './components/UserActions'
 
@@ -45,6 +50,17 @@ export default {
     QFooter,
     FloatingButton,
     UserActions
+  },
+  computed: {
+    routeName () {
+      return this.$route.name
+    },
+    showFooter () {
+      const blackList = [
+        'dashboard.register.update'
+      ]
+      return !includes(blackList, this.routeName)
+    }
   }
 }
 </script>
