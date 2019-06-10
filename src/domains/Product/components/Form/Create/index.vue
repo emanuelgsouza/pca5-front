@@ -1,6 +1,6 @@
 <template>
   <div class="create-product-stepper">
-    <ProductWarning :model="model" />
+    <!-- <ProductWarning :model="model" /> -->
     <QStepper
       v-model="step"
       animated

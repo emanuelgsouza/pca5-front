@@ -28,8 +28,26 @@
     </QCardSection>
 
     <QCardSection class="card-footer no-padding">
+
       <div class="text-center q-px-md q-pb-md">
+        {{ countOfLikes }}
+        <QBtn
+          flat
+          color="grey"
+          icon="far fa-thumbs-up"
+          @click="like"
+        />
+
         <p class="text-body1 feed-price"> R$ {{ dataValue }} </p>
+
+        <QBtn
+          flat
+          class="asd"
+          color="grey"
+          icon="far fa-thumbs-down"
+          @click="desLike"
+        />
+        {{ countOfDesLikes }}
       </div>
 
       <!-- Informacoes dos produtos online -->
@@ -113,7 +131,9 @@ export default {
     }
   },
   data: () => ({
-    expanded: true
+    expanded: true,
+    countOfLikes: 0, // this.data.like
+    countOfDesLikes: 0 // this.data.desLike
   }),
   computed: {
     dataName () {
@@ -200,6 +220,12 @@ export default {
     },
     openUrl () {
       window.open(this.url, 'blank')
+    },
+    like () {
+      this.countOfLikes++
+    },
+    desLike () {
+      this.countOfDesLikes++
     }
   }
 }
@@ -232,4 +258,12 @@ export default {
 .text-bold {
   font-weight: 500;
 }
+
+.asd {
+  -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
 </style>
