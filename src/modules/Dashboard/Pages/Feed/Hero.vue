@@ -10,9 +10,13 @@ export default {
 
 <style>
 .hero {
+  max-width: 1200px;
+  box-sizing: content-box;
   width: 100%;
-  height: 255px;
+  height: 300px;
+  background-size: 100% 100%;
   background-position: center;
-  background-image: url("https://images.unsplash.com/photo-1556742504-16b083241fab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80");
+  background-image: url('../../../../../src/statics/banner-alot.jpeg');
+  background-repeat: no-repeat;
 }
 </style>
