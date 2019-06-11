@@ -20,6 +20,7 @@
     />
 
     <QRouteTab
+      v-if="hasUser"
       icon="add"
       :to="{
         name: 'dashboard.register'
