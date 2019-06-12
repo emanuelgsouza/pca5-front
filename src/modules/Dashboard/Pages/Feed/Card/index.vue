@@ -30,7 +30,7 @@
     <QCardSection class="card-footer no-padding">
 
       <div class="text-center q-px-md q-pb-md">
-        {{ countOfLikes }}
+        <div v-if="countOfLikes > 0" class="pimba">{{ countOfLikes }}</div>
         <QBtn
           flat
           color="grey"
@@ -47,7 +47,7 @@
           icon="far fa-thumbs-down"
           @click="desLike"
         />
-        {{ countOfDesLikes }}
+        <div v-if="countOfDesLikes > 0" class="pimba">{{ countOfDesLikes }}</div>
       </div>
 
       <!-- Informacoes dos produtos online -->
@@ -264,6 +264,10 @@ export default {
     -o-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
+}
+
+.pimba {
+  display: inline;
 }
 
 </style>

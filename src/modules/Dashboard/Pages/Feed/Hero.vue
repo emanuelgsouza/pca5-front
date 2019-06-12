@@ -16,7 +16,7 @@ export default {
   height: 300px;
   background-size: 100% 100%;
   background-position: center;
-  background-image: url('../../../../../src/statics/banner-alot.jpeg');
+  background-image: url('../../../../../src/statics/banner-alot.jpg');
   background-repeat: no-repeat;
 }
 </style>
