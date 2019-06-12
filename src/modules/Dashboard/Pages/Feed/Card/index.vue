@@ -12,7 +12,7 @@
         :name="categoryIcon"
       />
       <div class="text-h5 relative-position text-center">
-        {{ dataName }}
+        {{ title }}
       </div>
     </QCardSection>
 
@@ -209,6 +209,9 @@ export default {
     },
     mapsUrl () {
       return `https://maps.google.com/?ll=${this.latitude},${this.longitude}`
+    },
+    title () {
+      return capitalize(this.dataName)
     }
   },
   methods: {

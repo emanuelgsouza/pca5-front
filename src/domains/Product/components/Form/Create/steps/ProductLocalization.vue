@@ -3,12 +3,12 @@
     <QForm ref="form">
       <QInput
         dense
-        label="Nome do local"
+        label="Nome do estabelecimento"
         :value="model.place"
         lazy-rules
         hint="Obrigatório"
         :rules="[
-          val => val !== null || 'É necessário informar o nome do local'
+          val => val !== null || 'É necessário informar o Nome do estabelecimento'
         ]"
         @input="value => updateModel('place', value)"
       />
